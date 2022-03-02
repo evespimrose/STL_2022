@@ -10,6 +10,21 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
+*.suo
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.tlog
+*.lastbuildstate
+*.ilk
+*.log
+*.vcxproj
+*.user
+*.pdb
+*.recipe
+*.idb
 
 # Compiled Dynamic libraries
 *.so
