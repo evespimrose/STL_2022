@@ -20,7 +20,6 @@
 *.lastbuildstate
 *.ilk
 *.log
-*.vcxproj
 *.user
 *.pdb
 *.recipe
