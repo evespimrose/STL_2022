@@ -15,9 +15,7 @@ using namespace std;
 
 int main()
 {
-	string a;
-	string_view b;
-	cout << "string의 크기 - " << sizeof(a) << endl << "string_view의 크기 - " << sizeof(b) << endl;
-
+	save("save.h");
+	save("save.cpp");
 	save("소스.cpp");
 }
