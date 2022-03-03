@@ -13,9 +13,39 @@
 
 using namespace std;
 
+// 교수님 답
+void change(int&, int&);
+
+// 내 답
+//void change(int& a, int& b)
+//{
+//	int tmp{};
+//	tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+
+// [문제] main()을 변경하면 안된다.
+// 실행하면 a와 b의 값이 서로 바껴야 한다.
+// 참조인자로 전달하지 않으면 매개변수를 복사본으로 전달해 함수에서 바꾸어도 원본인 변수의 값은 변경되지 않는다.
+// 클래스 안에서 레퍼런스는 복사본이 아닌 원본을 이용하라는 뜻이다.
+
 int main()
 {
-	save("save.h");
-	save("save.cpp");
+	int a{ 1 };
+	int b{ 2 };
+
+	change(a, b);
+
+	cout << a << ", " << b << endl;
+
 	save("소스.cpp");
+}
+
+void change(int& a, int& b)
+{
+	int tmp{};
+	tmp = a;
+	a = b;
+	b = tmp;
 }
