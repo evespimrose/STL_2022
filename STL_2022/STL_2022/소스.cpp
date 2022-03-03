@@ -5,6 +5,9 @@
 // 
 // 할일 - 어제 코딩한 save 함수를 save.cpp로 분리한 후 실행되도록 수정
 // 
+// &의 의미를 복습
+// class를 복습
+// 
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
@@ -13,27 +16,41 @@
 
 using namespace std;
 
-// 교수님 답
-void change(int&, int&);
+class Dog
+{
+	int a;
+public:
+	Dog() {};
+	//Dog(int i) { a = i; };
+	Dog(int i) : a{ i } {};
 
-// 내 답
-//void change(int& a, int& b)
-//{
-//	int tmp{};
-//	tmp = a;
-//	a = b;
-//	b = tmp;
-//}
+	friend ostream& operator<<(ostream&, const Dog& );
+};
+
+ostream& operator<<(ostream& os, const Dog& d)
+{
+	os << d.a;
+	return os;
+}
+
+template<typename T>
+void change(T& a, T& b)
+{
+	T tmp{};
+	tmp = a;
+	// 클래스가 선언될 때, operator=은 자동으로 생성된다. 
+	// a.operator=(b);
+	a = b;
+	b = tmp;
+}
 
 // [문제] main()을 변경하면 안된다.
 // 실행하면 a와 b의 값이 서로 바껴야 한다.
-// 참조인자로 전달하지 않으면 매개변수를 복사본으로 전달해 함수에서 바꾸어도 원본인 변수의 값은 변경되지 않는다.
-// 클래스 안에서 레퍼런스는 복사본이 아닌 원본을 이용하라는 뜻이다.
 
 int main()
 {
-	int a{ 1 };
-	int b{ 2 };
+	Dog a{ 1 };
+	Dog b{ 2 };
 
 	change(a, b);
 
@@ -42,10 +59,3 @@ int main()
 	save("소스.cpp");
 }
 
-void change(int& a, int& b)
-{
-	int tmp{};
-	tmp = a;
-	a = b;
-	b = tmp;
-}

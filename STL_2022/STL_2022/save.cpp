@@ -28,7 +28,7 @@ void save(std::string_view fname)
 	std::ofstream out{ "2022.1학기 STL 수78목23 강의저장.txt" , std::ios::app };
 
 	// 저장할 파일 이름과 크기(C++17)를 출력한다.
-	out << "===================================================================" << std::endl;
+	out << std::endl << std::endl << "===================================================================" << std::endl;
 	out << "파일 이름 : " << fname << std::endl;
 	out << "파일크기 : " << std::filesystem::file_size(fname) << std::endl;
 
