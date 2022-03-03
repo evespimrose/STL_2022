@@ -24,14 +24,19 @@ public:
 	//Dog(int i) { a = i; };
 	Dog(int i) : a{ i } {};
 
-	friend ostream& operator<<(ostream&, const Dog& );
+	//friend ostream& operator<<(ostream&, const Dog& );
+	
+	// 야매기술
+	operator int() {
+		return a;
+	}
 };
 
-ostream& operator<<(ostream& os, const Dog& d)
-{
-	os << d.a;
-	return os;
-}
+//ostream& operator<<(ostream& os, const Dog& d)
+//{
+//	os << d.a;
+//	return os;
+//}
 
 template<typename T>
 void change(T& a, T& b)
