@@ -11,21 +11,28 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
-
 #include "save.h"
 
 using namespace std;
 
-// [문제] int의 최대값을 찍어라.
+// [문제] int의 최댓값 출력
 
 int main()
 {
-	cout << "int의 최댓값 : ";
+	
 
 	//1
-	cout << numeric_limits<int>::max() << endl;
+	cout << "int의 최댓값 : " << numeric_limits<int>::max() << endl;
+	cout << "unsigned int의 최댓값 : " << numeric_limits<unsigned int>::max() << endl;
 
-	//save("소스.cpp");
+	//2
+	int num = 0x7F'FF'FF'FF;
+	cout << "int의 최댓값 : " << num << endl;
+
+	//3
+	cout << "int의 최댓값 : " << INT_MAX << endl;
+
+	save("소스.cpp");
 }
 
 //int main()
