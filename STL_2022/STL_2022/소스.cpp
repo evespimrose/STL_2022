@@ -1,12 +1,12 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 3월 3일 목요일
-// 수78목23 (1주 2일)
+// 2022. 1학기 STL 3월 10일 목요일
+// 수78목23 (2주 1일)
 // 
 // 
-// 할일 - 어제 코딩한 save 함수를 save.cpp로 분리한 후 실행되도록 수정
+// 템플릿 - 자료형에 관계없는 함수와 클래스를 만드는 C++ 핵심 keyword
+//		  - 이러한 방식의 코딩을 generic 
 // 
-// &의 의미를 복습
-// class를 복습
+// 많은 데이터를 다루는 연습 - 파일
 // 
 //----------------------------------------------------------------------------------------
 
@@ -16,50 +16,34 @@
 
 using namespace std;
 
-class Dog
-{
-	int a;
-public:
-	Dog() {};
-	//Dog(int i) { a = i; };
-	Dog(int i) : a{ i } {};
-
-	//friend ostream& operator<<(ostream&, const Dog& );
-	
-	// 야매기술
-	operator int() {
-		return a;
-	}
-};
-
-//ostream& operator<<(ostream& os, const Dog& d)
-//{
-//	os << d.a;
-//	return os;
-//}
-
 template<typename T>
 void change(T& a, T& b)
 {
-	T tmp{};
-	tmp = a;
-	// 클래스가 선언될 때, operator=은 자동으로 생성된다. 
-	// a.operator=(b);
+	T tmp{ a };
 	a = b;
 	b = tmp;
 }
 
-// [문제] main()을 변경하면 안된다.
-// 실행하면 a와 b의 값이 서로 바껴야 한다.
+// [문제] change를 한번만 선언하고 정의하여 
+// main이 수정 없이 실행되도록 해보자.
+
+// 함수 템플릿
+// 클래스 템플릿
+// 멤버함수 템플릿
 
 int main()
 {
-	Dog a{ 1 };
-	Dog b{ 2 };
-
-	change(a, b);
-
-	cout << a << ", " << b << endl;
+	{
+		
+		int a{ 1 }, b{ 2 };
+		change(a, b);
+		cout << a << ", " << b << endl;
+	}
+	{
+		string a{ "1"s }, b{ "2"s };
+		change(a, b);
+		cout << a << ", " << b << endl;
+	}
 
 	save("소스.cpp");
 }
