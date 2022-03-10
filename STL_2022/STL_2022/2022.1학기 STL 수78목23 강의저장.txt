@@ -472,3 +472,78 @@ int main()
 	save("소스.cpp");
 }
 
+
+
+===================================================================
+파일 이름 : 소스.cpp
+파일크기 : 1269
+저장 시간 : 2022-03-10 11:46:28 GMT+9
+//----------------------------------------------------------------------------------------
+// 2022. 1학기 STL 3월 10일 목요일
+// 수78목23 (2주 1일)
+// 
+// 
+// 템플릿 - 자료형에 관계없는 함수와 클래스를 만드는 C++ 핵심 keyword
+//		  - 이러한 방식의 코딩을 generic 
+// 
+// 많은 데이터를 다루는 연습 - 파일
+// 
+//----------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <random>
+#include <ctime>
+#include "save.h"
+
+using namespace std;
+
+// [문제] 엔진과 분포를 이용하여 임의의 값을 갖는 int 1000개를 화면에 출력하라.
+random_device rd;
+default_random_engine dre{ rd() };
+
+int main()
+{
+	std::uniform_int_distribution uid;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		cout << uid(dre) << "\t";
+	}
+	cout << endl;
+
+	save("소스.cpp");
+}
+
+//int main()
+//{
+//
+//	srand(time(NULL));
+//
+//	int a[1000]{};
+//
+//	for (int i : a)
+//	{
+//		i = rand();
+//		cout << i << "\t";
+//	}
+//
+//	//save("소스.cpp");
+//}
+
+//int main()
+//{
+//	std::random_device rd;
+//	std::mt19937 gen(rd());
+//	std::uniform_int_distribution<int> dis(0, 10000000);
+//
+//	int a[1000]{};
+//
+//	for (int i : a)
+//	{
+//		i = dis(gen);
+//		cout << i << "\t";
+//	}
+//
+//	//save("소스.cpp");
+//}
+

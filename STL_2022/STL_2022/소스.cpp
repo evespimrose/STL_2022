@@ -16,35 +16,48 @@
 
 using namespace std;
 
-template<typename T>
-void change(T& a, T& b)
-{
-	T tmp{ a };
-	a = b;
-	b = tmp;
-}
-
-// [문제] change를 한번만 선언하고 정의하여 
-// main이 수정 없이 실행되도록 해보자.
-
-// 함수 템플릿
-// 클래스 템플릿
-// 멤버함수 템플릿
+// [문제] int의 최대값을 찍어라.
 
 int main()
 {
-	{
-		
-		int a{ 1 }, b{ 2 };
-		change(a, b);
-		cout << a << ", " << b << endl;
-	}
-	{
-		string a{ "1"s }, b{ "2"s };
-		change(a, b);
-		cout << a << ", " << b << endl;
-	}
+	cout << "int의 최댓값 : ";
 
-	save("소스.cpp");
+	//1
+	cout << numeric_limits<int>::max() << endl;
+
+	//save("소스.cpp");
 }
+
+//int main()
+//{
+//
+//	srand(time(NULL));
+//
+//	int a[1000]{};
+//
+//	for (int i : a)
+//	{
+//		i = rand();
+//		cout << i << "\t";
+//	}
+//
+//	//save("소스.cpp");
+//}
+
+//int main()
+//{
+//	std::random_device rd;
+//	std::mt19937 gen(rd());
+//	std::uniform_int_distribution<int> dis(0, 10000000);
+//
+//	int a[1000]{};
+//
+//	for (int i : a)
+//	{
+//		i = dis(gen);
+//		cout << i << "\t";
+//	}
+//
+//	//save("소스.cpp");
+//}
 
