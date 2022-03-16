@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 3월 10일 목요일
-// 수78목23 (2주 1일)
+// 2022. 1학기 STL 3월 16일 수요일
+// 수78목23 (2주 2일)
 // 
 // 
 // 템플릿 - 자료형에 관계없는 함수와 클래스를 만드는 C++ 핵심 keyword
@@ -14,15 +14,14 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <string>
+#include <algorithm>
+#include <cmath>
 #include "save.h"
 
 using namespace std;
 
 // [문제] 엔진과 분포를 이용하여 임의의 값을 갖는 int 1000개를 화면에 출력하라.
-// 마지막 int값은 1515792703을 출력
-// 1515792703
+// 가장 큰 값을 찾아 화면에 출력해보자.
 
 int main()
 {
@@ -33,16 +32,53 @@ int main()
 		cout << "파일을 열 수 없습니다." << endl;
 		return 0;
 	}
-	int num;
 
-	for (int i = 0; i < 1000; ++i)
+	// 교수님
 	{
-		in >> num;
-		cout << num << "\t";
+		int num;
+		int max{ numeric_limits<int>::min() };
+
+		for (int i{}; i < 1000; ++i)
+		{
+			in >> num;
+			if (max < num) max = num;
+		}
+
+		cout << max << endl;
 	}
-	
 
+	// 교수님 2
 
-	//save("소스.cpp");
+	cout << *max_element(istream_iterator<int>{in}, {}) << endl;
+
+	//1
+	{
+		int num;
+		int M = 0;
+		for (int i = 0; i < 1000; ++i)
+		{
+			in >> num;
+			M = std::max(M, num);
+		}
+		cout << M << endl;
+	}
+	//2
+	{
+		int num;
+		int M = 0;
+		for (int i = 0; i < 1000; ++i)
+		{
+			in >> num;
+			if (M < num) M = num;
+		}
+
+		cout << M << endl;
+	}
+
+	// ?? 왜다르지?
+	// 2147255967
+	// 1515792703
+
+	save("소스.cpp");
 }
 
