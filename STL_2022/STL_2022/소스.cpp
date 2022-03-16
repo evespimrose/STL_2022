@@ -14,71 +14,29 @@
 
 #include <iostream>
 #include <fstream>
-#include <algorithm>
-#include <cmath>
 #include "save.h"
 
 using namespace std;
 
-// [문제] 엔진과 분포를 이용하여 임의의 값을 갖는 int 1000개를 화면에 출력하라.
-// 가장 큰 값을 찾아 화면에 출력해보자.
+// [문제] 
+// int 1000개를 파일에 메모리 그대로 기록하라. 파일 이름은 그대로 유지하라.
 
 int main()
 {
-	ifstream in{ "random int 1000s.txt" };
+	ofstream out{ "random int 1000s.txt", ios::binary };
+	// 이상한점?
+	// 4000 바이트일줄 알았는데 4004 바이트가 나왔다. 왜?
+	// 윈도우는 파일을 기록할 때 어떤 데이터에서는 1바이트를 2바이트로 저장한다 그것은 아스키 코드 enter. CR,LF를 누르면 2바이트로 저장한다.
+	// ios::binary 를 붙이면 4바이트가 사라진다.
 
-	if (!in)
+	int num;
+
+	for (int i = 0; i < 1000; ++i)
 	{
-		cout << "파일을 열 수 없습니다." << endl;
-		return 0;
+		num = i + 1;
+		out.write((const char*)&num, sizeof(num));
 	}
 
-	// 교수님
-	{
-		int num;
-		int max{ numeric_limits<int>::min() };
-
-		for (int i{}; i < 1000; ++i)
-		{
-			in >> num;
-			if (max < num) max = num;
-		}
-
-		cout << max << endl;
-	}
-
-	// 교수님 2
-
-	cout << *max_element(istream_iterator<int>{in}, {}) << endl;
-
-	//1
-	{
-		int num;
-		int M = 0;
-		for (int i = 0; i < 1000; ++i)
-		{
-			in >> num;
-			M = std::max(M, num);
-		}
-		cout << M << endl;
-	}
-	//2
-	{
-		int num;
-		int M = 0;
-		for (int i = 0; i < 1000; ++i)
-		{
-			in >> num;
-			if (M < num) M = num;
-		}
-
-		cout << M << endl;
-	}
-
-	// ?? 왜다르지?
-	// 2147255967
-	// 1515792703
-
-	save("소스.cpp");
+	//save("소스.cpp");
 }
 
