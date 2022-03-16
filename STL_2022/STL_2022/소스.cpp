@@ -14,27 +14,68 @@
 
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <format>		// c++20
+#include <cmath>
+#include <array>
 #include "save.h"
 
 using namespace std;
 
 // [문제] 
-// int 1000개를 파일에 메모리 그대로 기록하라. 파일 이름은 그대로 유지하라.
+// 랜덤 값 int 1000개를 파일에 메모리 그대로 기록하라. 
+// 이 때, 바이너리 모드로 기록하면 쓸데없는 변환을 안하도록 할 수 있다.
+// random int 1000s.txt 파일에 binary 모드와 write 함수를 사용하여 기록되었다.
+// 읽어서 가장 큰 값을 찾아 화면에 출력하라.
 
 int main()
 {
-	ofstream out{ "random int 1000s.txt", ios::binary };
-	// 이상한점?
-	// 4000 바이트일줄 알았는데 4004 바이트가 나왔다. 왜?
-	// 윈도우는 파일을 기록할 때 어떤 데이터에서는 1바이트를 2바이트로 저장한다 그것은 아스키 코드 enter. CR,LF를 누르면 2바이트로 저장한다.
-	// ios::binary 를 붙이면 4바이트가 사라진다.
+	ifstream in{ "random int 1000s.txt", ios::binary };
+	
 
-	int num;
-
-	for (int i = 0; i < 1000; ++i)
 	{
-		num = i + 1;
-		out.write((const char*)&num, sizeof(num));
+		/*int num;
+		int max{ numeric_limits<int>::min() };
+
+		for (int i = 0; i < 1000; ++i)
+		{
+			in.read((char*)&num, sizeof(num));
+			max = std::max(num, max);
+		}
+		cout << max << endl;*/
+	}
+
+	{
+		int num[1'000];
+		in.read((char*)num, sizeof(int) * 1'000);
+		{
+			/*for (int num : num)
+				cout << num << "\t";
+			cout << endl;*/
+		}
+		{
+			for (int num : num)
+				cout << format("{:20}", num);
+		}
+		cout << endl;
+		cout << *max_element(begin(num), end(num)) << endl;
+	}
+	{
+		//int num[1'000];
+		array<int, 1000> num;
+
+		in.read((char*)num.data(), sizeof(int) * 1'000);
+		{
+			/*for (int num : num)
+				cout << num << "\t";
+			cout << endl;*/
+		}
+		{
+			for (int num : num)
+				cout << format("{:20}", num);
+		}
+		cout << endl;
+		cout << *max_element(begin(num), end(num)) << endl;
 	}
 
 	//save("소스.cpp");
