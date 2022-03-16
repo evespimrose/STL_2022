@@ -7,64 +7,42 @@
 //		  - 이러한 방식의 코딩을 generic 
 // 
 // 많은 데이터를 다루는 연습 - 파일
+// 숙제 - 파일입출력 알아보기
+// 다음시간 질문 - int 1000개를 저장하려면 몇 바이트가 필요할까?
 // 
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
 #include "save.h"
 
 using namespace std;
 
-// [문제] int의 최댓값 출력
+// [문제] 엔진과 분포를 이용하여 임의의 값을 갖는 int 1000개를 화면에 출력하라.
+// 마지막 int값은 1515792703을 출력
+// 1515792703
 
 int main()
 {
+	ifstream in{ "random int 1000s.txt" };
+
+	if (!in)
+	{
+		cout << "파일을 열 수 없습니다." << endl;
+		return 0;
+	}
+	int num;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		in >> num;
+		cout << num << "\t";
+	}
 	
 
-	//1
-	cout << "int의 최댓값 : " << numeric_limits<int>::max() << endl;
-	cout << "unsigned int의 최댓값 : " << numeric_limits<unsigned int>::max() << endl;
 
-	//2
-	int num = 0x7F'FF'FF'FF;
-	cout << "int의 최댓값 : " << num << endl;
-
-	//3
-	cout << "int의 최댓값 : " << INT_MAX << endl;
-
-	save("소스.cpp");
+	//save("소스.cpp");
 }
-
-//int main()
-//{
-//
-//	srand(time(NULL));
-//
-//	int a[1000]{};
-//
-//	for (int i : a)
-//	{
-//		i = rand();
-//		cout << i << "\t";
-//	}
-//
-//	//save("소스.cpp");
-//}
-
-//int main()
-//{
-//	std::random_device rd;
-//	std::mt19937 gen(rd());
-//	std::uniform_int_distribution<int> dis(0, 10000000);
-//
-//	int a[1000]{};
-//
-//	for (int i : a)
-//	{
-//		i = dis(gen);
-//		cout << i << "\t";
-//	}
-//
-//	//save("소스.cpp");
-//}
 
