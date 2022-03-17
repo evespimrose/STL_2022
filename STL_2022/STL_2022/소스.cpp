@@ -8,46 +8,25 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <fstream>
 #include "save.h"
 
 using namespace std;
 
-// 메모리 관찰용 초미니 Dog를 만들자
-
-struct Dog
-{
-	Dog() { cout << "Dog 생성자 호출" << endl; }
-	~Dog() { cout << "Dog 소멸자 호출" << endl; }
-};
-
-// [문제] 
-// 
-// 
-
-void f()
-{
-	throw 1;
-}
+// [문제] 이 "소스.cpp" 파일의 소문자를 전부 대문자로 바꿔
+// "소스 대문자.cpp"로 저장하라.
 
 int main()
 {
+	ifstream in("소스.cpp");
+	ofstream out("소스 대문자.cpp");
+
+	char c;
+	while (in >> noskipws >> c)
+	{
+		c = toupper(c);
+		out << c ;
+	}
+
 	save("소스.cpp");
-
-	/*for (int i = 0; i < 3; ++i)
-	{
-		Dog* p = new Dog;
-		delete p;
-	}*/
-	unique_ptr<Dog[]>p{new Dog[3]};
-
-	// 여기서 비정상 종료
-	try
-	{
-		f();		// 예외를 던진다
-	}
-	catch (...)		// ... elipses
-	{
-		cout << "예외를 잡았다" << endl;
-		return 0;
-	}
 }
