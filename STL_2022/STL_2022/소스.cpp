@@ -15,7 +15,7 @@ using namespace std;
 
 int main()
 {
-	//save("소스.cpp");
+	save("소스.cpp");
 
 	while(true) 
 	{
@@ -23,7 +23,7 @@ int main()
 		cout << "몇 개를 원하십니까? : ";
 		cin >> num;
 
-		int* p{ new int[num] };
+		unique_ptr<int[]> p{new int[num]};
 
 		for (int i = 0; i < num; ++i)
 		{
@@ -39,7 +39,7 @@ int main()
 
 		cout << "1 부터" << num << "까지의 합계 : " << sum << endl << endl;
 
-		delete[] p;
+		p.reset(nullptr);
 	}
 }
 
