@@ -11,61 +11,26 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <vector>
-#include <array>
-#include <format>
-#include <random>
-#include <algorithm>
+
 #include "save.h"
 
 using namespace std;
 
-// [문제] 랜덤값을 갖는 int 100개를 생성하라.
-// 오름차순으로 정렬하라.
-// 화면에 정렬된 int 100개를 출력하라.
+// [문제] 
 
-default_random_engine dre;
+void f()
+{
+	cout << "함수가 호출되었다" << endl;
+}
 
 int main()
 {
-	std::uniform_int_distribution uid(0,100);
+	f();
 
-	array<int, 100> ai;
+	// f의 자료형을 출력하라.
+	cout << typeid(f).name() << endl;
+	cout << addressof(f) << endl;
+	cout << addressof(main) << endl;
 
-	{
-		/*for (int i = 0; i < ai.size(); ++i)
-		{
-			ai[i] = uid(dre);
-		}*/
-		for (int& random_number : ai)
-		{
-			random_number = uid(dre);
-		}
-		cout << "정렬 전 데이터" << endl;
-		for (int num : ai)
-		{
-			cout << format("{:4}", num);
-		}
-		cout << endl << "정렬 후 데이터" << endl;
-		sort(ai.begin(), ai.end());
-		for (int num : ai)
-		{
-			cout << format("{:4}", num);
-		}
-	}
-
-	{
-		//vector<int> vi;
-
-		/*for (int i = 0; i < 100; ++i)
-		{
-			vi.push_back(uid(dre));
-		}
-
-		sort(vi.begin(), vi.end());
-
-		for (int i : vi)
-			cout << i << endl;*/
-	}
 	//save("소스.cpp");
 }
