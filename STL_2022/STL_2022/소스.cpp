@@ -11,26 +11,42 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
-
+#include <thread>
 #include "save.h"
 
 using namespace std;
 
 // [문제] 
 
-void f()
+void jump()
 {
-	cout << "함수가 호출되었다" << endl;
+	cout << "짬푸!" << endl;
+}
+
+void slide()
+{
+	cout << "슬라이드!" << endl;
 }
 
 int main()
 {
-	f();
+	void(*f)(void) = jump;
+	int cnt{};
 
-	// f의 자료형을 출력하라.
-	cout << typeid(f).name() << endl;
-	cout << addressof(f) << endl;
-	cout << addressof(main) << endl;
+	// 3초에 한 번씩 점프와 슬라이드가 바뀌게
+	while (true)
+	{
+		f();
+		// 3초가 지나면 바꾼다
+		this_thread::sleep_for(1s);
+		if ((++cnt % 3) == 0)
+		{
+			if (f == jump)
+				f = slide;
+			else
+				f = jump;
+		}
+	}
 
 	//save("소스.cpp");
 }
