@@ -17,7 +17,8 @@
 
 using namespace std;
 
-// [문제] 이 "소스.cpp" 파일의 소문자를 전부 대문자로 바꿔
+// [문제] 이 "소스.cpp" 파일의 
+// 숫자를 *로 바꿔라.
 // "소스 대문자.cpp"로 저장하라.
 
 int main()
@@ -43,7 +44,11 @@ int main()
 		// STL 사용 방식
 		//transform(어디부터, 어디까지를, 저기에 저장, 이렇게 바꿔서)
 		//transform(istreambuf_iterator<char>{in}, {}, ostreambuf_iterator{ out }, toupper);
-		transform(istreambuf_iterator<char>{in}, {}, ostreambuf_iterator{ out }, [](char c) {return toupper(c); });
+		transform(istreambuf_iterator<char>{in}, {}, ostreambuf_iterator{ cout }, [](char c) {
+			if (isdigit(c))
+				c = '*';
+			return c; 
+			});
 
 	}
 	save("소스.cpp");
