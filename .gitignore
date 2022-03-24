@@ -44,4 +44,4 @@
 *.exe
 *.out
 *.app
-/[Rr]elease
+[Rr]elease/
