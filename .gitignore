@@ -44,3 +44,4 @@
 *.exe
 *.out
 *.app
+/[Rr]elease
