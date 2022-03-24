@@ -12,37 +12,26 @@
 
 #include <iostream>
 #include <functional>
+#include <string>
 
 #include "save.h"
+#include "STRING.h"
 
 using namespace std;
 
-// [문제] 
-// 호출가능(Callable) 타입
-// 호출가능한 타입은 어떤 것들이 있나?
-// 1. 함수포인터 - CODE 세그먼트에 기록된 명령어 집합의 시작번지
-// 2. 람다 - 이름 없는 함수, 실제는 클래스로 구현된다.
-// 3. operator()을 오버로딩한 클래스
-// 4. 멤버 함수를 가리키는 포인터
-// 
-// - 호출 가능 타입의 종류가 무한하기 때문에
-// 모든 호출가능타입을 대표하는 클래스를 만들었다. : function
-//
-
-int add(int a, int b)
-{
-	return a + b;
-}
-
+// [문제] main()이 문제없이 실행되도록 class STRING을 코딩하라.
+// special 함수는 동작을 관찰하도록 cout으로 메모리와 동작을 코딩한다.
+// 객체 생성 시 고유번호를 갖도록 한다.
 
 int main()
 {
-	function<int(int, int)> f;
+	string s;
+	
+	STRING a{ "2022 1학기" };
+	STRING b{ "STL" };
 
-	f = add;
-
-	cout << f(3, 3) << endl;
-
+	cout << a << endl;
+	cout << b << endl;
 
 	//save("소스.cpp");
 }
