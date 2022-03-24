@@ -11,8 +11,7 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <algorithm>
-#include <array>
+#include <functional>
 
 #include "save.h"
 
@@ -21,30 +20,29 @@ using namespace std;
 // [문제] 
 // 호출가능(Callable) 타입
 // 호출가능한 타입은 어떤 것들이 있나?
-// 1. 함수 - CODE 세그먼트에 기록된 명령어 집합의 시작번지
-// 2. 람다 - 이름 없는 함수
-// 3. 클래스 객체 - fuchtion call operator ()을 오버로딩한 클래스
+// 1. 함수포인터 - CODE 세그먼트에 기록된 명령어 집합의 시작번지
+// 2. 람다 - 이름 없는 함수, 실제는 클래스로 구현된다.
+// 3. operator()을 오버로딩한 클래스
+// 4. 멤버 함수를 가리키는 포인터
+// 
+// - 호출 가능 타입의 종류가 무한하기 때문에
+// 모든 호출가능타입을 대표하는 클래스를 만들었다. : function
 //
 
-class Dog {
-public:
-	bool operator()(int a, int b) {
-		cout << "Dog 호출" << endl;
-		cout << a << " 비교 " << b << endl;
-		return a > b;
-	}
-};
+int add(int a, int b)
+{
+	return a + b;
+}
+
 
 int main()
 {
-	array<int, 5> arr{1,3,5,2,4};
+	function<int(int, int)> f;
 
-	sort(arr.begin(), arr.end(), Dog());
-	for (int i : arr)
-	{
-		cout << i << " ";
-	}
-	cout << endl;
+	f = add;
+
+	cout << f(3, 3) << endl;
+
 
 	//save("소스.cpp");
 }
