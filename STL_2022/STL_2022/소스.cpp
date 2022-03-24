@@ -11,6 +11,9 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <algorithm>
+#include <array>
+
 #include "save.h"
 
 using namespace std;
@@ -20,43 +23,28 @@ using namespace std;
 // 호출가능한 타입은 어떤 것들이 있나?
 // 1. 함수 - CODE 세그먼트에 기록된 명령어 집합의 시작번지
 // 2. 람다 - 이름 없는 함수
+// 3. 클래스 객체 - fuchtion call operator ()을 오버로딩한 클래스
 //
 
-class Cat {};
-
-auto x2 = []() {
-	cout << "안녕! 난 람다야! 하위!" << endl;
+class Dog {
+public:
+	bool operator()(int a, int b) {
+		cout << "Dog 호출" << endl;
+		cout << a << " 비교 " << b << endl;
+		return a > b;
+	}
 };
 
 int main()
 {
-	class Dog {};
+	array<int, 5> arr{1,3,5,2,4};
 
-
-
-
-	//lambda
-	auto x = []() {
-		cout << "안녕! 난 람다야! 하위!" << endl;
-	};
-
-	auto x1 = []() {
-		cout << "안녕! 난 람다야! 하위!" << endl;
-	};
-
-	cout << typeid(Dog).name() << endl;
-	// class `int __cdecl main(void)'::`2'::Dog
-	cout << typeid(Cat).name() << endl;
-	// class Cat
-	cout << typeid(x).name() << endl;
-	//class `int __cdecl main(void)'::`2'::<lambda_1>
-	cout << typeid(x1).name() << endl;
-	//class `int __cdecl main(void)'::`2'::<lambda_2>
-	cout << typeid(x2).name() << endl;
-	//class x2::<lambda>
-
-	// 람다함수는 클래스로 구현되어 있음.
-
+	sort(arr.begin(), arr.end(), Dog());
+	for (int i : arr)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
 
 	//save("소스.cpp");
 }
