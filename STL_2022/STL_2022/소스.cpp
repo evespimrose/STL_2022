@@ -11,38 +11,21 @@
 //----------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <thread>
 #include "save.h"
 
 using namespace std;
 
 // [문제] 
 
-void jump()
-{
-	cout << "짬푸!" << endl;
-}
 
-void slide()
-{
-	cout << "슬라이드!" << endl;
-}
-
-int g;
 
 int main()
 {
-	// 확인 : 함수의 이름은 함수가 기록되어 있는 CODE 세그먼트의 시작번지이다.
-	// 함수들은 유사한 메모리에 기록되어 있음을 알 수 있다.
+	cout << "메인 호출" << endl;
 
-	cout << "main : " << addressof(main) << endl;
-	cout << "save : " << addressof(save) << endl;
-	cout << "jump : " << addressof(jump) << endl;
-	cout << "slide : " << addressof(slide) << endl;
+	int(*t)(void) = (int(*)(void))main();
+	
+	t();
 
-	int n;
-	cout << "STACK : " << addressof(n) << endl;
-	cout << "DATA : " << addressof(g) << endl;
-
-	save("소스.cpp");
+	//save("소스.cpp");
 }
