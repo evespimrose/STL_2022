@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 3월 23일 수요일
-// 수78목23 (3주 2일)
+// 2022. 1학기 STL 3월 24일 목요일
+// 수78목23 (4주 1일)
 // 
 // 지난 시간 : RAII / stack unwinding
 // 
@@ -28,25 +28,21 @@ void slide()
 	cout << "슬라이드!" << endl;
 }
 
+int g;
+
 int main()
 {
-	void(*f)(void) = jump;
-	int cnt{};
+	// 확인 : 함수의 이름은 함수가 기록되어 있는 CODE 세그먼트의 시작번지이다.
+	// 함수들은 유사한 메모리에 기록되어 있음을 알 수 있다.
 
-	// 3초에 한 번씩 점프와 슬라이드가 바뀌게
-	while (true)
-	{
-		f();
-		// 3초가 지나면 바꾼다
-		this_thread::sleep_for(1s);
-		if ((++cnt % 3) == 0)
-		{
-			if (f == jump)
-				f = slide;
-			else
-				f = jump;
-		}
-	}
+	cout << "main : " << addressof(main) << endl;
+	cout << "save : " << addressof(save) << endl;
+	cout << "jump : " << addressof(jump) << endl;
+	cout << "slide : " << addressof(slide) << endl;
 
-	//save("소스.cpp");
+	int n;
+	cout << "STACK : " << addressof(n) << endl;
+	cout << "DATA : " << addressof(g) << endl;
+
+	save("소스.cpp");
 }
