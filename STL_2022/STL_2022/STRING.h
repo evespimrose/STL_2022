@@ -9,7 +9,7 @@ class STRING {
 	static int cid;						// 객체가 생성될 때마다 1 증가
 
 public:
-	STRING() : num{}, p{}, id{cid++}
+	STRING() : num{}, p{}, id{++cid}
 	{
 		if (관찰)
 		{
@@ -32,15 +32,14 @@ public:
 	};
 	~STRING() {
 		// 관찰메시지를 켜면 출력한다.
-		std::cout << "dtor [" << id << "] " << this << std::endl;
+		//std::cout << "dtor [" << id << "] " << this << std::endl;
 
 		if (관찰)
 		{
 			print("소멸자");
 		}
 
-		if(num)
-			delete[] p;
+		delete[] p;
 	}
 
 	STRING(const STRING& other) : num{other.num}, id{++cid}
