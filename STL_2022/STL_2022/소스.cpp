@@ -30,21 +30,9 @@ extern bool 관찰;
 int main()
 {	
 
-	array<int, 10> a{1, 3, 5, 7, 9, 2, 4, 6, 8, 10};
+	array<int, 10> a{ 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 };
 
-	cout << sizeof(a) << endl;		// int[10]이 차지하는 메모리와 같다.
+	cout << a.max_size() << endl;
 
-	a.fill(333);
-
-	// 원소를 출력하시오 - 반복자 버전
-	{
-		for (array<int, 10>::iterator p = a.begin(); p != a.end(); ++p)		//for (auto p = a.begin(); p != a.end(); ++p)
-		{
-			cout << *p << " ";
-		}
-		cout << endl;
-	}
-
-
-	//save("소스.cpp");
+	save("소스.cpp");
 }
