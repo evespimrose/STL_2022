@@ -34,42 +34,17 @@ int main()
 
 	cout << sizeof(a) << endl;		// int[10]이 차지하는 메모리와 같다.
 
-	// 원소를 출력하시오 - 반복자 버전
-	//{
-	//	for (array<int, 10>::iterator p = a.begin(); p != a.end(); ++p)		//for (auto p = a.begin(); p != a.end(); ++p)
-	//	{
-	//		cout << *p << " ";
-	//	}
-	//	cout << endl;
-	//}
-	//{
-	//	// while 사용 버전
-	//	auto i = a.cbegin();
-	//	while (i != a.cend())
-	//	{
-	//		cout << *i++ << " ";
-	//	}
-	//	cout << endl;
-	//}
-	/*{
-		for (auto x : a)
-			cout << x << " ";
-		cout << endl;
-	}*/
-	// [문제] a의 원소를 거꾸로 출력하라.
+	a.fill(333);
 
-	/*{
-		for (auto i = a.rbegin(); i != a.rend(); ++i)
+	// 원소를 출력하시오 - 반복자 버전
+	{
+		for (array<int, 10>::iterator p = a.begin(); p != a.end(); ++p)		//for (auto p = a.begin(); p != a.end(); ++p)
 		{
-			cout << *i << " ";
+			cout << *p << " ";
 		}
 		cout << endl;
 	}
-	{
-		for (int i = a.size(); 0 < i; --i)
-			cout << a[i - 1] << " ";
-		cout << endl;
-	}*/
 
-	save("소스.cpp");
+
+	//save("소스.cpp");
 }
