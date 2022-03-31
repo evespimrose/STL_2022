@@ -1,16 +1,22 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 3월 30일 수요일
-// 수78목23 (4주 2일)
+// 2022. 1학기 STL 3월 31일 목요일
+// 수78목23 (5주 1일)
 //
-// 자원을 관리하는 클래스를 만들어 관찰하면서 - 컨테이너 / 반복자 / 알고리즘
 // RVO(Return value optimization), Copy Ellision
 // 
 // 컨테이너 -> Containers are objects that store other objects
 // 
+// 컨테이너
+// Sequence container
+//		array				- 유일하게 원소 갯수가 고정됨.
+//		vector				- 
+//		deque
+//		foward_list
+//		list
+// 
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <array>
-#include <algorithm>
 
 #include "save.h"
 #include "STRING.h"
@@ -23,27 +29,47 @@ extern bool 관찰;
 
 int main()
 {	
-	// 복사생성자 최소화
-	//관찰 = true;
 
-	array<STRING, 3> a{ "2022년", "3월", "30일" };
+	array<int, 10> a{1, 3, 5, 7, 9, 2, 4, 6, 8, 10};
 
-	// a를 글자수 기준 오름차순으로 정렬한 후 출력
+	cout << sizeof(a) << endl;		// int[10]이 차지하는 메모리와 같다.
 
-	sort(a.begin(), a.end(), [](STRING l, STRING r) {return l.getNum() < r.getNum(); });
+	// 원소를 출력하시오 - 반복자 버전
+	//{
+	//	for (array<int, 10>::iterator p = a.begin(); p != a.end(); ++p)		//for (auto p = a.begin(); p != a.end(); ++p)
+	//	{
+	//		cout << *p << " ";
+	//	}
+	//	cout << endl;
+	//}
+	//{
+	//	// while 사용 버전
+	//	auto i = a.cbegin();
+	//	while (i != a.cend())
+	//	{
+	//		cout << *i++ << " ";
+	//	}
+	//	cout << endl;
+	//}
+	/*{
+		for (auto x : a)
+			cout << x << " ";
+		cout << endl;
+	}*/
+	// [문제] a의 원소를 거꾸로 출력하라.
 
-	//sort(a.begin(), a.end(), [](STRING l, STRING r) {return l < r; });
-
-	
-	/*for (STRING& x : a)
+	/*{
+		for (auto i = a.rbegin(); i != a.rend(); ++i)
+		{
+			cout << *i << " ";
+		}
+		cout << endl;
+	}
 	{
-		cout << x << endl;
+		for (int i = a.size(); 0 < i; --i)
+			cout << a[i - 1] << " ";
+		cout << endl;
 	}*/
 
-	for (int i{}; i < a.size(); ++i)
-	{
-		cout << a[i] << endl;
-	}
-
-	//save("소스.cpp");
+	save("소스.cpp");
 }
