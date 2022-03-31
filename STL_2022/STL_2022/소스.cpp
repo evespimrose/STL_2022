@@ -17,7 +17,8 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <vector>
-#include <fstream>
+#include <string>
+#include <algorithm>
 
 #include "save.h"
 #include "STRING.h"
@@ -26,21 +27,24 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] vector에 "소스.cpp" 파일을 읽어들여서 출력하라.
+// [문제] 키보드에서 입력하는 단어를 모두 읽어라. 입력이 끝나면 오름차순으로 정렬해서 출력해라.
 
 int main()
-{	
-	ifstream in("소스.cpp");
+{
+	vector<string> v;
 
+	string s;
 
-	vector<char> v;
-	char c;
-	while (in >> noskipws >> c)
-		v.push_back(c);
+	while (cin >> s)
+	{
+		v.push_back(s);
+	}
 
-	for (char c : v)
-		cout << c;
-	cout << endl;
+	// 내림차순 정렬한다.  (lexicorgraphical comparison)
+	sort(v.begin(), v.end(), [](const string& a, const string& b) {return a > b; });
+
+	for (string s : v)
+		cout << s << '\t';
 
 	//save("소스.cpp");
 }
