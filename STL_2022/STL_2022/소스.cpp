@@ -16,7 +16,8 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <array>
+#include <vector>
+#include <fstream>
 
 #include "save.h"
 #include "STRING.h"
@@ -25,45 +26,21 @@ using namespace std;
 
 extern bool 관찰;
 
-//template<class T, int N>
-//class Array 
-//{
-//	T data[N];
-//public:
-//	begin() { return &data[0]; }
-//};
-
-// [문제] 
+// [문제] vector에 "소스.cpp" 파일을 읽어들여서 출력하라.
 
 int main()
 {	
+	ifstream in("소스.cpp");
 
-	array<int, 10> a{ 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 };
 
-	// int a[10];을 왜 쓰지 말아야 할까?
-	/*int a[10] {};
-	for (int i = 1; i <= 10; ++i)
-	{
-		cout << a[i] << endl;
-	} 이러면 마지막 원소가 쓰레기값이 나온다.
-	*/
+	vector<char> v;
+	char c;
+	while (in >> noskipws >> c)
+		v.push_back(c);
 
-	while (true)
-	{
-		int num{};
-		cout << "몇 번째 값을 찾으시나요? : ";
-		cin >> num;
-
-		try 
-		{
-			cout << num << " - " << a.at(num) << endl;
-		}
-		catch (exception& e)
-		{
-			cout << e.what() << endl;		// 10 - invalid array<T, N> subscript
-			cout << "유효범위는 0부터 9까지 입니다" << endl;
-		}
-	}
+	for (char c : v)
+		cout << c;
+	cout << endl;
 
 	//save("소스.cpp");
 }
