@@ -32,9 +32,26 @@ extern bool 관찰;
 
 int main()
 {
-	vector v{ 1,2,3 };
+	//save("소스.cpp");
 
-	cout << "벡터의 원소 수 : " << v.size() << endl << "원소의 위치 : " << v.data() << endl << "재할당 하지 않고 담을 수 있는 원소의 수(용량) : " << v.capacity() << endl;
+	vector<int> v;
+	int i = 0;
 
-	save("소스.cpp");
+	v.reserve(10);			// 10칸 예약
+
+	size_t old_capacity = v.capacity();
+
+	while (true)
+	{
+		v.push_back(++i);
+
+		if (v.size() -1 == old_capacity)
+		{
+			cout << "벡터의 원소 수 : " << v.size() << endl << "원소의 위치 : " << v.data() << endl << "재할당 하지 않고 담을 수 있는 원소의 수(용량) : " << v.capacity() << endl << endl;
+			old_capacity = v.capacity();
+		}
+
+	}
+	
+	
 }
