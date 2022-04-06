@@ -28,27 +28,13 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] 키보드에서 int를 입력받아라.
-// 합계와 평균을 화면에 출력하라.
+// [문제] 
 
 int main()
 {
+	vector v{ 1,2,3 };
+
+	cout << "벡터의 원소 수 : " << v.size() << endl << "원소의 위치 : " << v.data() << endl << "재할당 하지 않고 담을 수 있는 원소의 수(용량) : " << v.capacity() << endl;
+
 	save("소스.cpp");
-
-	vector<int> iv{};
-
-	int i;
-
-	while (cin >> i)
-		iv.push_back(i);
-
-	long long sum{};
-
-	for (auto i = iv.begin(); i != iv.end(); ++i)
-	{
-		sum += *i;
-	}
-
-	cout << "합계 : " << sum << endl << "평균 : " << sum / iv.size() << endl;
-
 }
