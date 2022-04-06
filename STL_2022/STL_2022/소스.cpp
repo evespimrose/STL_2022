@@ -19,6 +19,7 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "save.h"
 #include "STRING.h"
@@ -27,14 +28,27 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] 
+// [문제] 키보드에서 int를 입력받아라.
+// 합계와 평균을 화면에 출력하라.
 
 int main()
 {
-	관찰 = true;
-	
-	unique_ptr<STRING> p{ new STRING { "12345" } };
-	STRING s{ "12345" };		// 생성위치가 다르다.
+	save("소스.cpp");
 
-	//save("소스.cpp");
+	vector<int> iv{};
+
+	int i;
+
+	while (cin >> i)
+		iv.push_back(i);
+
+	long long sum{};
+
+	for (auto i = iv.begin(); i != iv.end(); ++i)
+	{
+		sum += *i;
+	}
+
+	cout << "합계 : " << sum << endl << "평균 : " << sum / iv.size() << endl;
+
 }
