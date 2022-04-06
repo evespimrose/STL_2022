@@ -32,26 +32,14 @@ extern bool 관찰;
 
 int main()
 {
+	관찰 = true;
+
+	vector<STRING> v{ "1234567" };			
+
+	v.emplace_back("1234567890");
+
+	// 객체 생성 시 임시객체를 생성한 후 vector에서 size() = 1, capacity() = 1, 
+	// sizeof(STRING)이 들어갈 메모리를 heap에 확보한 후 new로 만든 임시객체를 복사생성(deep_copy)해 추가한다.
+
 	//save("소스.cpp");
-
-	vector<int> v;
-	int i = 0;
-
-	v.reserve(10);			// 10칸 예약
-
-	size_t old_capacity = v.capacity();
-
-	while (true)
-	{
-		v.push_back(++i);
-
-		if (v.size() -1 == old_capacity)
-		{
-			cout << "벡터의 원소 수 : " << v.size() << endl << "원소의 위치 : " << v.data() << endl << "재할당 하지 않고 담을 수 있는 원소의 수(용량) : " << v.capacity() << endl << endl;
-			old_capacity = v.capacity();
-		}
-
-	}
-	
-	
 }
