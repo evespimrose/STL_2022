@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1切扁 STL 4岿 06老 夸老
-// 荐78格23 (5林 2老)
+// 2022. 1切扁 STL 4岿 07老 格夸老
+// 荐78格23 (6林 1老)
 //
 // RVO(Return value optimization), Copy Ellision
 // 
@@ -34,7 +34,11 @@ int main()
 {
 	包蔓 = true;
 
-	vector<STRING> v{ "1234567" };			
+	vector<STRING> v;
+
+	v.reserve(10);
+
+	v.emplace_back( "1234567" );
 
 	v.emplace_back("1234567890");
 
