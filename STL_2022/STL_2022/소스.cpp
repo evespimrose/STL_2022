@@ -28,22 +28,22 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] v에서 짝수만 제거하라.
-// 결과를 출력하시오.
+// [문제] 
 
 int main()
 {
-	vector<int> v{ 1,2,3,4,5,6,7,8,9,10 };
+	관찰 = true;
 
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	vector<STRING> v;
 
-	v.erase(remove_if(v.begin(), v.end(), [](int num) {return !(num & 1); }), v.end());
+	v.reserve(10);
 
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	v.emplace_back( "1234567" );
+
+	v.emplace_back("1234567890");
+
+	// 객체 생성 시 임시객체를 생성한 후 vector에서 size() = 1, capacity() = 1, 
+	// sizeof(STRING)이 들어갈 메모리를 heap에 확보한 후 new로 만든 임시객체를 복사생성(deep_copy)해 추가한다.
 
 	//save("소스.cpp");
 }
