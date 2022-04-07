@@ -28,6 +28,10 @@ public:
 
 	STRING operator=(const STRING&);
 
+	STRING(STRING&& other)noexcept;
+
+	STRING& operator=(STRING&& other)noexcept;
+
 	void print(const char*);
 
 	size_t getNum();

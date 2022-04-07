@@ -50,6 +50,19 @@ STRING::STRING(const STRING& other) : num{ other.num }, id{ ++cid }
 	}
 }
 
+STRING::STRING(STRING&& other) noexcept : id{ ++cid }, num { other.num }
+{
+	p = other.p;
+
+	other.p = nullptr;
+	other.num = 0;
+
+	if (관찰)
+	{
+		print("이동생성");
+	}
+}
+
 STRING STRING::operator+(const STRING& rhs) const
 {
 	STRING tmp;
@@ -83,6 +96,26 @@ STRING STRING::operator=(const STRING& other)
 
 	if (관찰)
 		print("복사할당");
+
+	return *this;
+}
+
+STRING& STRING::operator=(STRING&& other) noexcept
+{
+	if (this != &other) {
+		if (num)
+			delete p;
+		num = other.num;
+		p = other.p;
+
+		other.num = 0;
+		other.p = nullptr;
+	}
+
+	if (관찰)
+	{
+		print("이동할당");
+	}
 
 	return *this;
 }
