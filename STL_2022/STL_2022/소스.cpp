@@ -18,8 +18,7 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <fstream>
 
 #include "save.h"
 #include "STRING.h"
@@ -28,22 +27,23 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] v에서 짝수만 제거하라.
-// 결과를 출력하시오.
+// [문제] "소스.cpp"를 읽어 영문자갯수를 세서 다음 형식과 같이 출력
+// [a] - 10
 
 int main()
 {
-	vector<int> v{ 1,2,3,4,5,6,7,8,9,10 };
+	ifstream in{ "소스.cpp" };
 
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	char c;
+	int cnt[26]{};
 
-	v.erase(remove_if(v.begin(), v.end(), [](int num) {return !(num & 1); }), v.end());
-
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	while (in >> noskipws >> c)
+	{
+		if (isalpha(c) != 0)
+		{
+			
+		}
+	}
 
 	//save("소스.cpp");
 }
