@@ -41,8 +41,19 @@ int main()
 	{
 		if (isalpha(c) != 0)
 		{
-			
+			for (int i = 0; i < 26; ++i)
+			{
+				if (c == i + 'a')
+				{
+					cnt[i]++;
+				}
+			}
 		}
+	}
+
+	for (int i = 0; i < 26; ++i)
+	{
+		cout << (char)(i + 'a') << "의 개수 : " << cnt[i] << endl;
 	}
 
 	//save("소스.cpp");
