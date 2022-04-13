@@ -47,9 +47,6 @@ extern bool 관찰;
 // 덱은 띄엄띄엄 담을 수 있으므로 덱이 더 유리한 경우가 있음.
 // 
 
-// [문제] vector는 연속인데, deque는 연속이 아니라고?
-// 주소를 확인해보면 됨.
-
 // [문제2] vector보다 deque이 원소를 더 많이 담을 수 있다고?
 // 
 
@@ -64,14 +61,27 @@ public:
 
 int main()
 {
-	deque<Test> v(10);
-
-	v.push_front(Test{});
-
-	for (int i = 0; i < v.size(); ++i)
-		v[i].show();
-
 	//save("소스.cpp");
+
+	vector<int> v;
+
+	while (true)
+	{
+		try 
+		{
+			v.push_back(1);
+		}
+		catch (exception& e)
+		{
+			cout << "벡터가 저장한 원소 갯수 : " << v.size() << endl;
+			return 0;
+		}
+	}
+	// vector<Test> : 466609
+	// deque<Test> : 1982338
+	// vector<int> : 136216567
+	// deque<int> : 268435452
+
 }
 
 /*
