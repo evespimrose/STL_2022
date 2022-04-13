@@ -45,12 +45,36 @@ extern bool 관찰;
 // [문제] vector는 연속인데, deque는 연속이 아니라고?
 // 주소를 확인해보면 됨.
 
+class Test
+{
+	char c[1000];
+public:
+	void show() const {
+		cout << (long long)this << endl;
+	}
+};
+
 int main()
 {
-	deque<int> d{ 1,2,3,4,5 };
-	for (int i = 0; i < d.size(); ++i)
-		cout << d[i] << endl;
-	cout << sizeof(d) << endl; // 벡터 : 24, 덱 : 40. 왜? 
+	vector<Test> v(10);
+
+	for (int i = 0; i < v.size(); ++i)
+		v[i].show();
 
 	//save("소스.cpp");
 }
+
+/*
+2389308997664
+2389308998664
+2389308999664
+2389309000664
+2389309001664
+2389309002664
+2389309003664
+2389309004664
+2389309005664
+2389309006664
+*/
+
+// 1000씩 바뀜
