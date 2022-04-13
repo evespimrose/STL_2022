@@ -41,11 +41,9 @@ int main()
 	//	return *i == static_cast <STRING>("4444");
 	//	});
 
-	auto p = v.cbegin();
-	++p;
-	++p;
+	// random access iterator
 
-	v.insert(p, STRING{ "333" });
+	v.insert(++++v.cbegin(), STRING{ "333" });
 
 	for (int i = 0; i < v.size(); ++i)
 	{
