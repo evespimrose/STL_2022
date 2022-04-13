@@ -22,7 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <algorithm>
+#include <deque>
 
 #include "save.h"
 #include "STRING.h"
@@ -42,10 +42,15 @@ extern bool 관찰;
 // 덱은 연속적으로 저장되지 않았으므로 주의.
 // 
 
-// [문제] 
+// [문제] vector는 연속인데, deque는 연속이 아니라고?
+// 주소를 확인해보면 됨.
 
 int main()
 {
+	deque<int> d{ 1,2,3,4,5 };
+	for (int i = 0; i < d.size(); ++i)
+		cout << d[i] << endl;
+	cout << sizeof(d) << endl; // 벡터 : 24, 덱 : 40. 왜? 
 
 	//save("소스.cpp");
 }
