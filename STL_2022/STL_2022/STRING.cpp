@@ -81,6 +81,11 @@ bool STRING::operator<(const STRING& rhs) const
 	return num < rhs.num;
 }
 
+//bool STRING::operator==(const STRING& rhs)
+//{
+//	return num < rhs.num;
+//}
+
 STRING STRING::operator=(const STRING& other)
 {
 	if (this == &other)

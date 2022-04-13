@@ -28,6 +28,8 @@ public:
 
 	STRING operator=(const STRING&);
 
+	bool operator==(const STRING&);
+
 	STRING(STRING&& other)noexcept;
 
 	STRING& operator=(STRING&& other)noexcept;

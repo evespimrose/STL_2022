@@ -20,7 +20,8 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
-#include <array>
+#include <vector>
+#include <algorithm>
 
 #include "save.h"
 #include "STRING.h"
@@ -29,45 +30,24 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] "소스.cpp"를 읽어 영문자갯수를 세서 다음 형식과 같이 출력
-// [a] - 10
+// [문제] vector의 중간에 원소를 추가한다.
+// "4444" 앞에 "333"을 끼워넣어라.
 
 int main()
 {
-	ifstream in{ "소스.cpp" };
+	vector<STRING> v{ "1", "22", "4444", "55555" };
 
-	char c;
-	int cnt[26]{};
-	array<int, 26> arr{};
+	//auto p = find_if(v.begin(), v.end(), [](vector<STRING>::iterator i) {
+	//	return *i == static_cast <STRING>("4444");
+	//	});
 
-	// 내 풀이
+	v.insert(v.begin(), "333");
+
+	sort(v.begin(), v.end(), [](STRING l, STRING r) {return l < r; });
+
+	for (int i = 0; i < v.size(); ++i)
 	{
-		/*while (in >> c)
-		{
-			c = tolower(c);
-
-			if (isalpha(c) != 0)
-			{
-				for (int i = 0; i < 26; ++i)
-				{
-					if (c == i + 'a')
-					{
-						cnt[i]++;
-					}
-				}
-			}
-		}*/
-	}
-	
-	//교수님 풀이
-	
-	while (in >> c)
-		if (isalpha(c))
-			arr[tolower(c) - 'a']++;
-
-	for (int i = 0; i < arr.size(); ++i)
-	{
-		cout << "[" << static_cast<char>(i + 'a') << "] - " << arr[i] << endl;
+		cout << v[i] << endl;
 	}
 
 	//save("소스.cpp");
