@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 4월 07일 목요일
-// 수78목23 (6주 1일)
+// 2022. 1학기 STL 4월 13일 수요일
+// 수78목23 (6주 2일)
 //
 // RVO(Return value optimization), Copy Ellision
 // 
@@ -9,16 +9,18 @@
 // 컨테이너
 // Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
 //		array				- 유일하게 원소 갯수가 고정됨.
-//		vector				- 
+//		vector				- 깊게 알아볼 가치가 있는 컨테이너
 //		deque
 //		foward_list
 //		list
 // 
-// 예정 - 중간시험 4.27(수) (8주 2일)
+// 예정 - 중간시험 4.20(수) (7주 2일)
+// 시험시간 70분 1745~
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <fstream>
+#include <array>
 
 #include "save.h"
 #include "STRING.h"
@@ -36,24 +38,36 @@ int main()
 
 	char c;
 	int cnt[26]{};
+	array<int, 26> arr{};
 
-	while (in >> noskipws >> c)
+	// 내 풀이
 	{
-		if (isalpha(c) != 0)
+		/*while (in >> c)
 		{
-			for (int i = 0; i < 26; ++i)
+			c = tolower(c);
+
+			if (isalpha(c) != 0)
 			{
-				if (c == i + 'a')
+				for (int i = 0; i < 26; ++i)
 				{
-					cnt[i]++;
+					if (c == i + 'a')
+					{
+						cnt[i]++;
+					}
 				}
 			}
-		}
+		}*/
 	}
+	
+	//교수님 풀이
+	
+	while (in >> c)
+		if (isalpha(c))
+			arr[tolower(c) - 'a']++;
 
-	for (int i = 0; i < 26; ++i)
+	for (int i = 0; i < arr.size(); ++i)
 	{
-		cout << (char)(i + 'a') << "의 개수 : " << cnt[i] << endl;
+		cout << "[" << static_cast<char>(i + 'a') << "] - " << arr[i] << endl;
 	}
 
 	//save("소스.cpp");
