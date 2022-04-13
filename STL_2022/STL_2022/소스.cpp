@@ -41,9 +41,11 @@ int main()
 	//	return *i == static_cast <STRING>("4444");
 	//	});
 
-	v.insert(v.begin(), "333");
+	auto p = v.cbegin();
+	++p;
+	++p;
 
-	sort(v.begin(), v.end(), [](STRING l, STRING r) {return l < r; });
+	v.insert(p, STRING{ "333" });
 
 	for (int i = 0; i < v.size(); ++i)
 	{
