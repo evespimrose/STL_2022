@@ -20,7 +20,7 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <deque>
+#include <list>
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -32,9 +32,9 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] "컨테이너.txt"의 단어(string)를 deque에 읽어오시오.
-// deque에 저장된 각 단어를 오름차순으로 정렬하시오.
-// deque의 단어를 길이 오름차순 정렬하시오.
+// [문제] "컨테이너.txt"의 단어(string)를 list에 읽어오시오.
+// 오름차순 정렬하시오. 
+// space라는 단어는 몇 번째 단어인가?
 // 결과를 출력하시오.
 // 
 
@@ -42,17 +42,20 @@ int main()
 {
 	ifstream in{ "컨테이너.txt" };
 
-	// 덱에 읽어온다
-	deque<string> d{ istream_iterator<string>{in},{} };
+	list<string> l;
 
-	// space란 단어는 몇 번째 단어인가?
-	// 참고로 library는 3번째 단어이다.
-	
-	// 값 == 값으로 찾을 때에는 find함수가 더 유리함.
 
-	auto p = find(d.begin(), d.end(), "library");
+	string s;
 
-	cout << "단어" << *p << "는 : " << p - d.begin() + 1 << "번 째 단어입니다." << endl;
+	while (in >> s)
+	{
+		l.push_back(s);
+	}
+
+	l.sort();
+
+	for (auto i = l.crbegin(); i != next(l.crbegin(), 10); ++i)
+		cout << *i << endl;
 
 	save("소스.cpp");
 }
