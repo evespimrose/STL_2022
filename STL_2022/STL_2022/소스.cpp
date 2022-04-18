@@ -38,6 +38,9 @@ extern bool 관찰;
 // 결과를 출력하시오.
 // 
 
+// 덱은 random access가 O(1)동작, 반복자 무효화 없음이 핵심 특징
+//
+
 int main()
 {
 	ifstream in{ "컨테이너.txt" };
@@ -52,10 +55,30 @@ int main()
 		l.push_back(s);
 	}
 
-	l.sort();
+	auto p = find(l.begin(), l.end(), "space");
+	if (p == l.end())
+		cout << "그런거 없어요" << endl;
+	else
+	{
+		cout << *p << "는 " << distance(l.begin(), p) + 1 << "번 째 단어입니다." << endl;
+		/*int step{};
+		auto b = l.begin();
+		cout << *p << "는 ";
+		while (true)
+		{
+			if (p == b){
+				cout << step + 1 << "번 째 단어입니다." << endl;
+				break;
+			}
+			else
+			{
+				step++;
+				b++;
+			}
+		}distance의 기능과 같음
+		*/
+	}
 
-	for (auto i = l.crbegin(); i != next(l.crbegin(), 10); ++i)
-		cout << *i << endl;
 
-	save("소스.cpp");
+	//save("소스.cpp");
 }
