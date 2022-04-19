@@ -3795,11 +3795,6 @@ istream& operator>>(istream& is, Player& p)
     return is;
 }
 
-void Up(string& s)
-{
-    s[0] = toupper(s[0]);
-}
-
 int main()
 {
     string fileName{ "중간시험.dat"s };
@@ -3877,5 +3872,130 @@ int main()
             cout << p;
         cout << endl;
     }
+
+}
+
+// wkdgudxor2
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <filesystem>
+
+using namespace std;
+
+class Test
+{
+public:
+    string name; // 이름
+    int id; // 아이디
+
+    friend ostream& operator<<(ostream&, const Test&);
+    friend istream& operator>>(istream& is, Test& p);
+    friend bool operator==(int i, Test p);
+
+public:
+    Test() : id{}
+    {
+
+    }
+    ~Test()
+    {
+
+    }
+
+    int get_id() const
+    {
+        return id;
+    }
+
+    string get_name() const
+    {
+        return name;
+    }
+
+    void set_name_upper()
+    {
+        name[0] = toupper(name[0]);
+    }
+
+    void write(ostream& os)
+    {
+        os.write((char*)this, sizeof(Test));
+    }
+
+    bool read(istream& is)
+    {
+        is.read((char*)this, sizeof(Test));
+
+        return !is.eof();
+    }
+
+    void show() const
+    {
+        cout << name << ", " << id << endl;
+    }
+};
+
+bool operator==(int i, Test p)
+{
+    return p.id == i;
+}
+
+ostream& operator<<(ostream& os, const Test& p)
+{
+    os << "이름 : " << p.name << ", ";
+    os << "아이디 : " << p.id << endl;
+    return os;
+}
+
+istream& operator>>(istream& is, Test& p)
+{
+    is >> p.name;
+    is >> p.id;
+    return is;
+}
+
+
+string file1{ "시험1.dat" };
+string file2{ "시험2.dat" };
+
+int main()
+{
+	ifstream in1{ file1, ios::binary };
+	ifstream in2{ file2, ios::binary };
+
+	if (!in1 || !in2)
+	{
+		cout << "파일을 열 수 없습니다" << endl;
+		return 0;
+	}
+
+    size_t fileSize = filesystem::file_size(file1);
+    cout << file1 << "의 크기는 : " << fileSize << endl;
+
+    Test t{};
+    vector<Test> v1;
+    vector<Test> v2;
+
+    while (in1)
+    {
+        in1.read((char*)&t, sizeof(Test));
+        v1.push_back(t);
+    }
+
+    cout << v1.size() << endl;
+
+    while (in2)
+    {
+        in2.read((char*)&t, sizeof(Test));
+        v2.push_back(t);
+    }
+
+    cout << v2.size() << endl;
+    v1[10000].show();
+    v2[10000].show();
 
 }
