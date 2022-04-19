@@ -3716,3 +3716,166 @@ int main()
 
 	save("소스.cpp");
 }
+
+// wkdgudxor
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <filesystem>
+
+using namespace std;
+
+class Player
+{
+public:
+    string name; // 이름
+    int id; // 아이디
+
+    friend ostream& operator<<(ostream&, const Player&);
+    friend istream& operator>>(istream& is, Player& p);
+    friend bool operator==(int i, Player p);
+
+public:
+    Player() : id{}
+    {
+
+    }
+    ~Player()
+    {
+
+    }
+
+    int get_id() const
+    {
+        return id;
+    }
+
+    string get_name() const
+    {
+        return name;
+    }
+
+    void set_name_upper()
+    {
+        name[0] = toupper(name[0]);
+    }
+
+    void write(ostream& os)
+    {
+        os.write((char*)this, sizeof(Player));
+    }
+
+    bool read(istream& is)
+    {
+        is.read((char*)this, sizeof(Player));
+
+        return !is.eof();
+    }
+};
+
+bool operator==(int i, Player p)
+{
+    return p.id == i;
+}
+
+ostream& operator<<(ostream& os, const Player& p)
+{
+    os << "이름 : " << p.name << ", ";
+    os << "아이디 : " << p.id << endl;
+    return os;
+}
+
+istream& operator>>(istream& is, Player& p)
+{
+    is >> p.name;
+    is >> p.id;
+    return is;
+}
+
+void Up(string& s)
+{
+    s[0] = toupper(s[0]);
+}
+
+int main()
+{
+    string fileName{ "중간시험.dat"s };
+
+    ifstream in{ fileName, ios::binary };
+
+    if (!in)
+    {
+        cout << fileName << " : 파일을 열 수 없습니다." << endl;
+        exit(0);
+    }
+
+    size_t fileSize = filesystem::file_size(fileName);
+    cout << fileName << "의 크기는 : " << fileSize << endl;
+
+    vector<Player> v{ istream_iterator<Player>{in},{} };
+
+    cout << v.size() << endl;
+
+    // 2번
+    cout << *v.crbegin() << endl;
+
+    // 3번
+    for (Player& p : v)
+    {
+        p.set_name_upper();
+    }
+
+    auto p = find_if(v.begin(), v.end(), [](Player& p) {
+        return p.get_name() == "Stlcontainer"s; 
+        });
+
+    if (p == v.end())
+    {
+        cout << "없습니다." << endl;
+    }
+    else
+    {
+        cout << *p;
+        cout << distance(v.begin(), p) + 1 << endl << endl;
+    }
+
+    cout << "id를 검색합니다" << endl;
+
+    while(true)
+    {
+        int id;
+        cout << "찾으려는 id를 입력하세요 : ";
+        cin >> id;
+
+        vector<Player> sv;
+
+        if (id < 1 || 10000 < id)
+        {
+            cout << "유효한 id는 [1,10000] 입니다." << endl << endl;
+            continue;
+        }
+
+        int cnt = count_if(v.begin(), v.end(), [&sv,id](Player& p) {
+            if (p == id)
+            {
+                sv.push_back(p);
+                return true;
+            }
+            else
+                return false;
+            });
+
+        sort(sv.begin(), sv.end(), [](const Player& l, const Player& r) {
+            return l.get_name().length() < r.get_name().length();
+            });
+
+        cout << "id가 " << id << "객체의 수 - " << cnt << endl;
+        for (const Player& p : sv)
+            cout << p;
+        cout << endl;
+    }
+
+}
