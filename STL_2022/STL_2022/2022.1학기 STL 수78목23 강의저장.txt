@@ -3999,3 +3999,237 @@ int main()
     v2[10000].show();
 
 }
+
+// wkdgudxor3
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <filesystem>
+
+using namespace std;
+
+class Player
+{
+public:
+    string name; // 이름
+    int id; // 아이디
+
+    friend ostream& operator<<(ostream&, const Player&);
+    friend istream& operator>>(istream& is, Player& p);
+    friend bool operator==(int i, Player p);
+
+public:
+    Player() : id{}
+    {
+
+    }
+    ~Player()
+    {
+
+    }
+
+    int get_id() const
+    {
+        return id;
+    }
+
+    string get_name() const
+    {
+        return name;
+    }
+
+    void set_name_upper()
+    {
+        *name.begin() = toupper(*name.begin());
+    }
+
+    void write(ostream& os)
+    {
+        os.write((char*)this, sizeof(Player));
+    }
+
+    bool read(istream& is)
+    {
+        is.read((char*)this, sizeof(Player));
+
+        return !is.eof();
+    }
+};
+
+bool operator==(int i, Player p)
+{
+    return p.id == i;
+}
+
+ostream& operator<<(ostream& os, const Player& p)
+{
+    os << "이름 : " << p.name << ", ";
+    os << "아이디 : " << p.id << endl;
+    return os;
+}
+
+istream& operator>>(istream& is, Player& p)
+{
+    is >> p.name;
+    is >> p.id;
+    return is;
+}
+
+int main()
+{
+    string fileName{ "중간시험.dat"s };
+
+    ifstream in{ fileName, ios::binary };
+
+    if (!in)
+    {
+        cout << fileName << " : 파일을 열 수 없습니다." << endl;
+        exit(0);
+    }
+
+    size_t fileSize = filesystem::file_size(fileName);
+    cout << fileName << "의 크기는 : " << fileSize << endl;
+
+    cout << "fileSize / sizeof(Player) : " << fileSize / sizeof(Player) << endl;
+
+    Player pp{};
+    vector<Player> v;
+
+    while (in)
+    {
+        in.read((char*)&pp, sizeof(Player));
+        v.push_back(pp);
+    }
+    cout << v.size() << endl;
+
+    cout << *v.crbegin() << endl;
+
+    /*for (Player& p : v)
+    {
+        p.set_name_upper();
+    }*/
+
+    auto p = find_if(v.begin(), v.end(), [](Player& p) {
+        return p.get_name() == "standardlibrary"s;
+        });
+
+    if (p == v.end())
+    {
+        cout << "없습니다." << endl;
+    }
+    else
+    {
+        cout << *p;
+        cout << distance(v.begin(), p) + 1 << endl << endl;
+    }
+
+    cout << "id를 검색합니다" << endl;
+
+    while (true)
+    {
+        int id;
+        cout << "찾으려는 id를 입력하세요 : ";
+        cin >> id;
+
+        vector<Player> sv;
+
+        if (id < 1 || 10000 < id)
+        {
+            cout << "유효한 id는 [1,10000] 입니다." << endl << endl;
+            continue;
+        }
+
+        int cnt = count_if(v.begin(), v.end(), [&sv, id](Player& p) {
+            if (p == id)
+            {
+                sv.push_back(p);
+                return true;
+            }
+            else
+                return false;
+            });
+
+        /*sort(sv.begin(), sv.end(), [](const Player& l, const Player& r) {
+            return l.get_name().length() < r.get_name().length();
+            });*/
+
+        cout << "id가 " << id << "객체의 수 : " << cnt << endl;
+        for (const Player& p : sv)
+            cout << p;
+        cout << endl;
+    }
+}
+
+// wkdgudxor4
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <map>
+#include <string>
+#include <fstream>
+#include <filesystem>
+
+using namespace std;
+
+int main()
+{
+	ifstream in{ "셜록홈즈의 모험.txt" };
+
+	string s;
+
+	vector<string> v{ istream_iterator<string>{ in }, {} };
+	cout << v.size() << endl;
+
+	cout << *max_element(v.begin(), v.end(), [](const string& a, const string& b) {
+		return a.size() < b.size();
+		}) << endl;
+
+	for (string& s : v) {
+		for (char& c : s)
+			c = tolower(c);
+	}
+	set<string> ss{ v.begin(), v.end() };
+	cout << ss.size() << endl;
+
+	map<string, int> m;
+
+	for (string const& x : v) {
+		string a = x;
+		transform(a.begin(), a.end(), a.begin(), tolower);
+		m[a]++;
+	}
+
+	cout << "단어와 개수 쌍의 개수 - " << m.size() << endl;
+	vector< pair<string, int>> siv;
+	for (auto [단어, 개수] : m) {
+		siv.emplace_back(단어, 개수);
+	}
+
+	sort(siv.begin(), siv.end(),
+		[](const pair<string, int>& a, const pair<string, int>& b) {
+			return a.second > b.second;
+		});
+
+	for (int i = 0; i < 5; ++i) {
+		cout << siv[i].first << " - " << siv[i].second << endl;
+	}
+
+	ofstream out{ "e없는 단어.txt" };
+
+	vector<string> noE;
+	for (const string& s : v) {
+		if (s.find('e') == string::npos) {
+			noE.push_back(s);
+		}
+	}
+
+	cout << "e없는 단어의 수 - " << noE.size() << endl;
+
+	copy(noE.begin(), noE.end(), ostream_iterator<string>(out, " "));
+
+}
