@@ -38,7 +38,27 @@ public:
 
 	size_t getNum();
 
+	// 2022.04.21 begin(), end() 코딩
+	STRING_iterator begin()
+	{
+		// 메모리 시작번지를 알려주면 된다.
+		return STRING_iterator(p);
+	}
+
+	STRING_iterator end()
+	{
+		// 메모리 끝 번지를 알려주면 된다.
+		return STRING_iterator(p + num);
+	}
+
 private:
 	friend std::ostream& operator<<(std::ostream&, const STRING&);
 };
 
+class STRING_iterator
+{
+	char* p;
+public:
+	STRING_iterator() = default;
+	STRING_iterator(char* p) : p{ p } {}
+};
