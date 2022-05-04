@@ -7,6 +7,8 @@
 // 
 // 반복자					- 포인터를 추상화한 것
 // 
+// 반복자를 이해한다면 제네릭 함수를 만들어 볼 수 있겠다.
+// 
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <vector>
@@ -18,11 +20,11 @@ using namespace std;
 
 extern bool 관찰;
 
-template <class Iter, class Val>
-Iter my_find(Iter b, Iter e, Val v)
+template <class Iter, class Call>
+Iter my_find_if(Iter b, Iter e, Call f)
 {
 	while (b != e) {
-		if (*b == v)
+		if (f(*b))
 			return b;
 		++b;
 	}
@@ -37,33 +39,30 @@ void show(Iter)
 }
 
 // [문제]
-// 반복자의 종류(category) 를 구분하고 알아본다.
-// 반복자를 인수로 받는 함수를 만들어 어떤 종류의 반복자인지 출력하도록 하자.
+// STRING에서 대문자가 몇 번째인지 출력하라. 없으면 없다고 출력하라.
 //
 
 int main()
 {
-	save("소스.cpp");
-	save("STRING.h");
-	save("STRING.cpp");
-
-	STRING s;
-
-	cin >> s;
-
-	// [문제] s에 어떤 문자가 몇 번째인지 출력하자.
-
-	while (true) {
-		cout << "찾으려는 문자는? ";
-		char c;
-		cin >> c;
-
-		auto p = my_find(s.begin(), s.end(), c);
-		if (p != s.end()) {
-			cout << distance(s.begin(), p) + 1 << "번째 문자입니다" << endl;
-		}
-		else
-			cout << c << "는 없습니다" << endl;
-	}
 	//save("소스.cpp");
+
+	STRING s;			// 루프 최적화. 루프 안에서 선언되서 매번 초기화되는 변수를 루프 밖으로 들어 옮겨주는 컴파일러의 동작. loop optimization
+
+	while (true)
+	{
+		cout << "단어를 입력하세요 : ";
+
+		cin >> s;
+
+		auto p = my_find_if(s.begin(), s.end(), [](char c) {
+			return isupper(c);
+			});
+
+		if (p == s.end())
+			cout << "대문자 없다" << endl;
+		else
+			cout << distance(s.begin(), p) + 1 << " 위치에서 발견" << endl;
+	}
+
+
 }

@@ -4678,3 +4678,216 @@ std::istream& operator>>(std::istream& is, STRING& s)
 	s = str.c_str();
 	return is;
 }
+
+===================================================================
+파일 이름 : 소스.cpp
+파일크기 : 1484
+저장 시간 : 2022-05-04 15:47:14 GMT+9
+//----------------------------------------------------------------------------------------
+// 2022. 1학기 STL 4월 13일 수요일
+// 수78목23 (6주 2일)
+// 
+// 컨테이너					- 다른 객체를 저장하는 객체
+// Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
+// 
+// 반복자					- 포인터를 추상화한 것
+// 
+//----------------------------------------------------------------------------------------
+#include <iostream>
+#include <vector>
+
+#include "save.h"
+#include "STRING.h"
+
+using namespace std;
+
+extern bool 관찰;
+
+template <class Iter, class Val>
+Iter my_find(Iter b, Iter e, Val v)
+{
+	while (b != e) {
+		if (*b == v)
+			return b;
+		++b;
+	}
+	return e;
+}
+
+template<class Iter>
+void show(Iter)
+{
+	cout << "반복자 타입 : " << typeid(Iter).name() << endl;
+	//cout << "반복자의 종류 : " << typename(iterator_traits<Iter>::iterator_category()).name() << endl;
+}
+
+// [문제]
+// STRING에서 'k' 보다 큰 문자가 몇 번째인지 출력하라. 없으면 없다고 출력하라.
+//
+
+int main()
+{
+	save("소스.cpp");
+
+	STRING s;			// 루프 최적화. 루프 안에서 선언되서 매번 초기화되는 변수를 루프 밖으로 들어 옮겨주는 컴파일러의 동작. loop optimization
+
+	while (true)
+	{
+		cout << "단어를 입력하세요 : ";
+
+		cin >> s;
+
+		auto p = find_if(s.begin(), s.end(), [](char c) {
+			return 'k' < c;
+			});
+
+		if (p == s.end())
+			cout << "k보다 큰 글자 없다" << endl;
+		else
+			cout << distance(s.begin(), p) + 1 << " 위치에서 발견" << endl;
+	}
+
+
+}
+
+===================================================================
+파일 이름 : 소스.cpp
+파일크기 : 1470
+저장 시간 : 2022-05-04 15:47:45 GMT+9
+//----------------------------------------------------------------------------------------
+// 2022. 1학기 STL 4월 13일 수요일
+// 수78목23 (6주 2일)
+// 
+// 컨테이너					- 다른 객체를 저장하는 객체
+// Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
+// 
+// 반복자					- 포인터를 추상화한 것
+// 
+//----------------------------------------------------------------------------------------
+#include <iostream>
+#include <vector>
+
+#include "save.h"
+#include "STRING.h"
+
+using namespace std;
+
+extern bool 관찰;
+
+template <class Iter, class Val>
+Iter my_find(Iter b, Iter e, Val v)
+{
+	while (b != e) {
+		if (*b == v)
+			return b;
+		++b;
+	}
+	return e;
+}
+
+template<class Iter>
+void show(Iter)
+{
+	cout << "반복자 타입 : " << typeid(Iter).name() << endl;
+	//cout << "반복자의 종류 : " << typename(iterator_traits<Iter>::iterator_category()).name() << endl;
+}
+
+// [문제]
+// STRING에서 대문자가 몇 번째인지 출력하라. 없으면 없다고 출력하라.
+//
+
+int main()
+{
+	save("소스.cpp");
+
+	STRING s;			// 루프 최적화. 루프 안에서 선언되서 매번 초기화되는 변수를 루프 밖으로 들어 옮겨주는 컴파일러의 동작. loop optimization
+
+	while (true)
+	{
+		cout << "단어를 입력하세요 : ";
+
+		cin >> s;
+
+		auto p = find_if(s.begin(), s.end(), [](char c) {
+			return isupper(c);
+			});
+
+		if (p == s.end())
+			cout << "대문자 없다" << endl;
+		else
+			cout << distance(s.begin(), p) + 1 << " 위치에서 발견" << endl;
+	}
+
+
+}
+
+===================================================================
+파일 이름 : 소스.cpp
+파일크기 : 1474
+저장 시간 : 2022-05-04 15:50:27 GMT+9
+//----------------------------------------------------------------------------------------
+// 2022. 1학기 STL 4월 13일 수요일
+// 수78목23 (6주 2일)
+// 
+// 컨테이너					- 다른 객체를 저장하는 객체
+// Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
+// 
+// 반복자					- 포인터를 추상화한 것
+// 
+//----------------------------------------------------------------------------------------
+#include <iostream>
+#include <vector>
+
+#include "save.h"
+#include "STRING.h"
+
+using namespace std;
+
+extern bool 관찰;
+
+template <class Iter, class Val>
+Iter my_find_if(Iter b, Iter e, Val v)
+{
+	while (b != e) {
+		if (v(*b))
+			return b;
+		++b;
+	}
+	return e;
+}
+
+template<class Iter>
+void show(Iter)
+{
+	cout << "반복자 타입 : " << typeid(Iter).name() << endl;
+	//cout << "반복자의 종류 : " << typename(iterator_traits<Iter>::iterator_category()).name() << endl;
+}
+
+// [문제]
+// STRING에서 대문자가 몇 번째인지 출력하라. 없으면 없다고 출력하라.
+//
+
+int main()
+{
+	save("소스.cpp");
+
+	STRING s;			// 루프 최적화. 루프 안에서 선언되서 매번 초기화되는 변수를 루프 밖으로 들어 옮겨주는 컴파일러의 동작. loop optimization
+
+	while (true)
+	{
+		cout << "단어를 입력하세요 : ";
+
+		cin >> s;
+
+		auto p = my_find_if(s.begin(), s.end(), [](char c) {
+			return isupper(c);
+			});
+
+		if (p == s.end())
+			cout << "대문자 없다" << endl;
+		else
+			cout << distance(s.begin(), p) + 1 << " 위치에서 발견" << endl;
+	}
+
+
+}
