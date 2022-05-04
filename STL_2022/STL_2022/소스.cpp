@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 4월 13일 수요일
-// 수78목23 (6주 2일)
+// 2022. 1학기 STL 5월 04일 수요일
+// 수78목23 (9주 2일)
 // 
 // 컨테이너					- 다른 객체를 저장하는 객체
 // Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
@@ -38,7 +38,14 @@ int main()
 {
 	//save("소스.cpp");
 
-	
+	vector<char> v;
+	v.reserve(100);
 
-	my_copy(istream_iterator<char>{cin}, {}, ostream_iterator<char>{cout, " - "});
+	my_copy(istream_iterator<char>{cin}, {}, back_inserter(v));
+
+	// back_inserter operator=  => container->push_back(_STD move(_Val));
+
+	for (int i = 0; i < v.size(); ++i)
+		cout << v[i] << " - ";
+	cout << endl;
 }
