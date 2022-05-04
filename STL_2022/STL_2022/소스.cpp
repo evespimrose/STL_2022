@@ -13,7 +13,7 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <span>
-#include <deque>
+#include <vector>
 
 #include "save.h"
 #include "STRING.h"
@@ -42,6 +42,10 @@ int main()
 	int a[10]{ 1,2,3,4,5 };
 
 	print(a);
+
+	vector<int> v{ 1,2,3,4,5 };
+
+	print(v);
 
 	//save("¼Ò½º.cpp");
 }
