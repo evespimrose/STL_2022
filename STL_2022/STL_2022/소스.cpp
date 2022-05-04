@@ -5,13 +5,15 @@
 // 컨테이너					- 다른 객체를 저장하는 객체
 // Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
 // 
-// 반복자					- 포인터를 추상화한 것
-// 
-// 반복자를 이해한다면 제네릭 함수를 만들어 볼 수 있겠다.
+// C++20 span - contiguous 컨테이너와 연결된 view를 말함.
+//				배열이 인자로 전달될 때 size()를 알 수 없는 문제를 해결.
+//				[], array, vector, string, STRING
+//				-> 이것들을 일관되게 취급하려고 만든 view.
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <vector>
+#include <span>
+#include <deque>
 
 #include "save.h"
 #include "STRING.h"
@@ -20,32 +22,26 @@ using namespace std;
 
 extern bool 관찰;
 
-template <class Input, class Output>
-void my_copy(Input b, Input e, Output f)
+void print(span<int>);
+
+void print(span<int> a)			// 배열은 인자로 전달되면 포인터가 된다(type decay)
 {
-	while (b != e) {
-		*f = *b;
-		++b;
-		++f;
-	}
+	cout << "전체 메모리 크기 : " << a.size_bytes() << endl;
+	for (int i = 0; i < a.size(); ++i)
+		cout << a[i] << " - ";
+	cout << endl;
 }
 
 // [문제]
-// 키보드에서 입력한 문자를 그대로 화면에 출력하라.
+// print 함수는 a를 인자로 받아 전체 원소를 출력한다.
+// 선언하고 정의하라.
 //
 
 int main()
 {
+	int a[10]{ 1,2,3,4,5 };
+
+	print(a);
+
 	//save("소스.cpp");
-
-	vector<char> v;
-	v.reserve(100);
-
-	my_copy(istream_iterator<char>{cin}, {}, back_inserter(v));
-
-	// back_inserter operator=  => container->push_back(_STD move(_Val));
-
-	for (int i = 0; i < v.size(); ++i)
-		cout << v[i] << " - ";
-	cout << endl;
 }
