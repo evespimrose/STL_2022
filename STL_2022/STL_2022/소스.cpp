@@ -18,6 +18,17 @@ using namespace std;
 
 extern bool 관찰;
 
+template <class Iter, class Val>
+Iter my_find(Iter b, Iter e, Val v)
+{
+	while (b != e) {
+		if (*b == v)
+			return b;
+		++b;
+	}
+	return e;
+}
+
 template<class Iter>
 void show(Iter)
 {
@@ -32,15 +43,27 @@ void show(Iter)
 
 int main()
 {
-	STRING s{ "1234567890" };
+	save("소스.cpp");
+	save("STRING.h");
+	save("STRING.cpp");
 
-	for (char c : s)
-		cout << c << " * " << endl;
-	cout << endl;
+	STRING s;
 
-	/*for (auto i = s.begin(); i != s.end(); ++i)
-		cout << *i << " ? ";
-	cout << endl;*/
+	cin >> s;
 
+	// [문제] s에 어떤 문자가 몇 번째인지 출력하자.
+
+	while (true) {
+		cout << "찾으려는 문자는? ";
+		char c;
+		cin >> c;
+
+		auto p = my_find(s.begin(), s.end(), c);
+		if (p != s.end()) {
+			cout << distance(s.begin(), p) + 1 << "번째 문자입니다" << endl;
+		}
+		else
+			cout << c << "는 없습니다" << endl;
+	}
 	//save("소스.cpp");
 }

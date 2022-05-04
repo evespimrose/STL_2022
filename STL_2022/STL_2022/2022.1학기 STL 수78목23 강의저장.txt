@@ -4282,3 +4282,399 @@ int main()
 
 	save("소스.cpp");
 }
+
+===================================================================
+파일 이름 : 소스.cpp
+파일크기 : 1507
+저장 시간 : 2022-05-04 15:37:18 GMT+9
+//----------------------------------------------------------------------------------------
+// 2022. 1학기 STL 4월 13일 수요일
+// 수78목23 (6주 2일)
+// 
+// 컨테이너					- 다른 객체를 저장하는 객체
+// Sequence container		- 임의의 위치에 원소의 값을 읽고 쓰거나 추가할 수 있다.
+// 
+// 반복자					- 포인터를 추상화한 것
+// 
+//----------------------------------------------------------------------------------------
+#include <iostream>
+#include <vector>
+
+#include "save.h"
+#include "STRING.h"
+
+using namespace std;
+
+extern bool 관찰;
+
+template <class Iter, class Val>
+Iter my_find(Iter b, Iter e, Val v)
+{
+	while (b != e) {
+		if (*b == v)
+			return b;
+		++b;
+	}
+	return e;
+}
+
+template<class Iter>
+void show(Iter)
+{
+	cout << "반복자 타입 : " << typeid(Iter).name() << endl;
+	//cout << "반복자의 종류 : " << typename(iterator_traits<Iter>::iterator_category()).name() << endl;
+}
+
+// [문제]
+// 반복자의 종류(category) 를 구분하고 알아본다.
+// 반복자를 인수로 받는 함수를 만들어 어떤 종류의 반복자인지 출력하도록 하자.
+//
+
+int main()
+{
+	save("소스.cpp");
+	save("STRING.h");
+	save("STRING.cpp");
+
+	STRING s;
+
+	cin >> s;
+
+	// [문제] s에 어떤 문자가 몇 번째인지 출력하자.
+
+	while (true) {
+		cout << "찾으려는 문자는? ";
+		char c;
+		cin >> c;
+
+		auto p = my_find(s.begin(), s.end(), c);
+		if (p != s.end()) {
+			cout << distance(s.begin(), p) + 1 << "번째 문자입니다" << endl;
+		}
+		else
+			cout << c << "는 없습니다" << endl;
+	}
+	//save("소스.cpp");
+}
+
+===================================================================
+파일 이름 : STRING.h
+파일크기 : 3170
+저장 시간 : 2022-05-04 15:37:18 GMT+9
+//----------------------------------------------------------------------------------------------
+// STRING.cpp - 자원을 관리하는 STL 관찰용 클래스
+// 
+// 2022.3.20
+//
+
+#pragma once
+
+#include <iostream>
+
+class STRING_iterator {
+	// 2022. 4. 28
+public:	// 표준 반복자라면 이 다섯가지 타입을 제공해야 한다.
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = char;
+	using difference_type = ptrdiff_t;
+	using pointer = char*;
+	using reference = char&;
+
+private:
+	char* p;
+
+public:
+	STRING_iterator(char* p) : p{ p } {	}
+
+	char& operator*() const {
+		return *p;
+	};
+
+	STRING_iterator& operator++() {
+		++p;
+		return *this;
+	};
+
+	// 2022. 4. 27 sort가 요구하는 - 연산
+	difference_type operator-(const STRING_iterator& rhs) const {
+		return p - rhs.p;
+	}
+
+	// 2022. 4. 28 sort가 요구하는 -- 연산
+	STRING_iterator& operator--() {
+		--p;
+		return *this;
+	}
+
+	STRING_iterator operator+(difference_type d) const {
+		return STRING_iterator{ p + d };
+	}
+
+	STRING_iterator operator-(difference_type d) const {
+		return STRING_iterator{ p - d };
+	}
+
+
+
+	// <, >, <=, >=, ==, != 
+	// 관계연산자를 자동으로 생성하는 우주선 연산자를 사용한다.
+	// spaceship operator(three-way comparison operator)
+
+	auto operator<=>(const STRING_iterator& rhs) const = default;
+
+	// 강순서(strong order), 약순서(weak), 부분순서(partial)
+	//bool operator!=( const STRING_iterator& rhs ) const {
+	//	std::cout << "이게 우선 사용" << "\n";
+	//	return p != rhs.p;
+	//}
+};
+
+class STRING_reverse_iterator {
+	char* p;
+
+public:
+	STRING_reverse_iterator(char* p) : p{ p } { }
+
+	char& operator*() const {
+		return *(p - 1);
+	};
+
+	STRING_reverse_iterator& operator++() {
+		--p;
+		return *this;
+	};
+
+	// <, >, <=, >=, ==, != 
+	// 관계연산자를 자동으로 생성하는 우주선 연산자를 사용한다.
+	// spaceship operator(three-way comparison operator)
+
+	auto operator<=>(const STRING_reverse_iterator& rhs) const = default;
+};
+
+class STRING {
+	// 페딩 4바이트 속도를 위해 비워둠
+	int id;								// 생성 시 부여
+	size_t num;							// 확보한 자원의 수
+	char* p;							// 확보한 자원의 위치
+	static int cid;						// 객체가 생성될 때마다 1 증가
+
+public:
+	// 2022. 4. 27
+	using iterator = STRING_iterator;
+	using reverse_iterator = STRING_reverse_iterator;
+public:
+	STRING();
+	STRING(const char*);
+	~STRING();
+
+	STRING(const STRING&);
+
+	STRING operator+(const STRING&) const;
+
+	bool operator<(const STRING&) const;
+
+	STRING operator=(const STRING&);
+
+	bool operator==(const STRING&);
+
+	STRING(STRING&& other)noexcept;
+
+	STRING& operator=(STRING&& other)noexcept;
+
+	void print(const char*);
+
+	size_t getNum();
+
+	// 2022.04.21 begin(), end() 코딩
+	iterator begin() const {
+		return iterator{ p };
+	}
+
+	iterator end() const {
+		return iterator{ p + num };
+	}
+
+	reverse_iterator rbegin() const {
+		return reverse_iterator{ p + num };
+	}
+
+	reverse_iterator rend() const {
+		return reverse_iterator{ p };
+	}
+
+private:
+	friend std::ostream& operator<<(std::ostream&, const STRING&);
+	// 2022. 4. 28 추가
+	friend std::istream& operator>>(std::istream&, STRING&);
+};
+
+
+
+===================================================================
+파일 이름 : STRING.cpp
+파일크기 : 2523
+저장 시간 : 2022-05-04 15:37:18 GMT+9
+//----------------------------------------------------------------------------------------------
+// STRING.cpp - 자원을 관리하는 STL 관찰용 클래스
+// 
+// 2022.3.20
+//
+
+#pragma once
+#include <iostream>
+#include "STRING.h"
+
+bool 관찰{ false };
+
+STRING::STRING() : num{}, p{}, id{ ++cid }
+{
+	if (관찰)
+	{
+		print("디폴트");
+	}
+};
+STRING::STRING(const char* s) : num{ strlen(s) }, id{ ++cid }
+{
+	p = new char[num];
+
+	memcpy(p, s, num);
+
+	if (관찰)
+	{
+		print("생성자(*)");
+	}
+};
+STRING::~STRING() {
+	// 관찰메시지를 켜면 출력한다.
+	//std::cout << "dtor [" << id << "] " << this << std::endl;
+
+	if (관찰)
+	{
+		print("소멸자");
+	}
+
+	delete[] p;
+}
+
+STRING::STRING(const STRING& other) : num{ other.num }, id{ ++cid }
+{
+	p = new char[other.num];
+	memcpy(p, other.p, num);
+	if (관찰)
+	{
+		print("복사생성");
+	}
+}
+
+STRING::STRING(STRING&& other) noexcept : id{ ++cid }, num { other.num }
+{
+	p = other.p;
+
+	other.p = nullptr;
+	other.num = 0;
+
+	if (관찰)
+	{
+		print("이동생성");
+	}
+}
+
+STRING STRING::operator+(const STRING& rhs) const
+{
+	STRING tmp;
+
+	tmp.num = num + rhs.num;
+	tmp.p = new char[num + rhs.num];
+
+	memcpy(tmp.p, p, num);
+	memcpy(tmp.p + num, rhs.p, rhs.num);
+
+	return tmp;
+}
+
+bool STRING::operator<(const STRING& rhs) const
+{
+	return num < rhs.num;
+}
+
+//bool STRING::operator==(const STRING& rhs)
+//{
+//	return num < rhs.num;
+//}
+
+STRING STRING::operator=(const STRING& other)
+{
+	if (this == &other)
+		return *this;
+
+	if (num)
+		delete[] p;
+
+	num = other.num;
+	p = new char[num];
+
+	memcpy(p, other.p, num);
+
+	if (관찰)
+		print("복사할당");
+
+	return *this;
+}
+
+STRING& STRING::operator=(STRING&& other) noexcept
+{
+	if (this != &other) {
+		if (num)
+			delete p;
+		num = other.num;
+		p = other.p;
+
+		other.num = 0;
+		other.p = nullptr;
+	}
+
+	if (관찰)
+	{
+		print("이동할당");
+	}
+
+	return *this;
+}
+
+void STRING::print(const char* s)
+{
+	std::cout << s << ", [" << id << "] 객체 : " << this;
+	if (num)
+	{
+		std::cout << " 자원 수 : " << num << " 주소 : " << (void*)p;
+	}
+	else
+	{
+		std::cout << " 자원없음";
+	}
+	std::cout << std::endl;
+}
+
+size_t STRING::getNum()
+{
+	return num;
+}
+
+
+int STRING::cid{};
+
+std::ostream& operator<<(std::ostream& os, const STRING& s)
+{
+	for (int i = 0; i < s.num; ++i)
+		os << s.p[i];
+	return os;
+}
+
+// 2022. 4. 28 추가
+std::istream& operator>>(std::istream& is, STRING& s)
+{
+	std::string str;
+	is >> str;
+	s = str.c_str();
+	return is;
+}

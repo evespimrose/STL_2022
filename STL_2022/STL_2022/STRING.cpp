@@ -153,3 +153,12 @@ std::ostream& operator<<(std::ostream& os, const STRING& s)
 		os << s.p[i];
 	return os;
 }
+
+// 2022. 4. 28 Ãß°¡
+std::istream& operator>>(std::istream& is, STRING& s)
+{
+	std::string str;
+	is >> str;
+	s = str.c_str();
+	return is;
+}
