@@ -20,49 +20,25 @@ using namespace std;
 
 extern bool 관찰;
 
-template <class Iter, class Call>
-Iter my_find_if(Iter b, Iter e, Call f)
+template <class Input, class Output>
+void my_copy(Input b, Input e, Output f)
 {
 	while (b != e) {
-		if (f(*b))
-			return b;
+		*f = *b;
 		++b;
+		++f;
 	}
-	return e;
-}
-
-template<class Iter>
-void show(Iter)
-{
-	cout << "반복자 타입 : " << typeid(Iter).name() << endl;
-	//cout << "반복자의 종류 : " << typename(iterator_traits<Iter>::iterator_category()).name() << endl;
 }
 
 // [문제]
-// STRING에서 대문자가 몇 번째인지 출력하라. 없으면 없다고 출력하라.
+// 키보드에서 입력한 문자를 그대로 화면에 출력하라.
 //
 
 int main()
 {
 	//save("소스.cpp");
 
-	STRING s;			// 루프 최적화. 루프 안에서 선언되서 매번 초기화되는 변수를 루프 밖으로 들어 옮겨주는 컴파일러의 동작. loop optimization
+	
 
-	while (true)
-	{
-		cout << "단어를 입력하세요 : ";
-
-		cin >> s;
-
-		auto p = my_find_if(s.begin(), s.end(), [](char c) {
-			return isupper(c);
-			});
-
-		if (p == s.end())
-			cout << "대문자 없다" << endl;
-		else
-			cout << distance(s.begin(), p) + 1 << " 위치에서 발견" << endl;
-	}
-
-
+	my_copy(istream_iterator<char>{cin}, {}, ostream_iterator<char>{cout, " - "});
 }
