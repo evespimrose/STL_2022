@@ -13,7 +13,6 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <set>
-#include <format>
 
 #include "save.h"
 #include "STRING.h"
@@ -39,10 +38,11 @@ public:
 
 int main()
 {
+	save("소스.cpp");
+
 	set<STRING, 길이순> s{ istream_iterator<STRING>{cin}, {} };
 	
 	for (const STRING& word : s)
 		cout << word << endl;
 
-	//save("소스.cpp");
 }
