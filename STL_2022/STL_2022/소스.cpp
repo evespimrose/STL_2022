@@ -2,7 +2,7 @@
 // 2022. 1학기 STL 5월 11일 수요일
 // 수78목23 (10주 2일)
 // 
-// 5월 25일 졸작 설명회
+// 5월 25일 졸작 설명회(수 56교시)
 // 5/30 ~ 6/20 지도교수 신청일
 // 
 // Associative Container - set, multi_set, map, multi_map
@@ -13,82 +13,36 @@
 //----------------------------------------------------------------------------------------
 #include <iostream>
 #include <set>
-#include <string>
-#include <list>
-#include <random>
+#include <format>
 
 #include "save.h"
 #include "STRING.h"
 
 using namespace std;
 
-default_random_engine dre;
-uniform_int_distribution<int> uid{ 'a','z' };
-uniform_int_distribution<int> uidN{ 1, 10000 };
-
-class Dog
-{
-	string name;
-	int n;
-
-public:
-	Dog()
-	{
-		for (int i = 0; i < 10; ++i)
-			name += uid(dre);
-
-		n = uidN(dre);
-	}
-
-	bool operator<(const Dog& rhs) const
-	{
-		return n < rhs.n;
-	}
-
-	string getName() const { return name; }
-
-	int getN() const { return n; }
-
-	void show() const
-	{
-		cout << name << " - " << n << endl;
-	}
-
-};
 extern bool 관찰;
 
 // [문제]
-// set에다가 내가 만든 자료형 Dog을 넣고싶다.
-// 정렬 기준n오름차순으로 항상 정렬하는 set을 만들고 싶다.
+// 키보드 입력한 단어를 set<STRING>에 넣어라
+// set<STRING>의 정렬기준은 단어길이 오름차순이다
+// set을 화면에 출력하라
 //
 
-auto 정렬기준 = [](const Dog& a, const Dog& b)
+class 길이순
 {
-	return a.getN() < b.getN();
+public:
+	bool operator()(const STRING& a, const STRING& b) const
+	{
+		return a.getNum() < b.getNum();
+	}
 };
 
 int main()
 {
+	set<STRING, 길이순> s{ istream_iterator<STRING>{cin}, {} };
+	
+	for (const STRING& word : s)
+		cout << word << endl;
+
 	//save("소스.cpp");
-
-	multiset<Dog, decltype(정렬기준)> s;
-
-	for (int i = 0; i < 1000; ++i)
-	{
-		s.emplace( );
-	}
-
-	cout << "셋의 원소 수 - " << s.size() << endl;
-
-	for (const Dog& dog : s)
-		dog.show();
-
-	// 기준이 없어요?
-	// 1. less<Dog>가 있나 살펴본다.
-	// 2. class Dog이 < 연산자를 제공하고 있는지 살펴본다.
-	//   - 2.1 멤버 - 코딩가능하면 멤버로 만든다.
-	//	 - 2.2 전역
-	// 3. 기준을 직접 템플릿 인자로 제공한다.
-	//
-
 }

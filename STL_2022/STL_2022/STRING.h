@@ -120,7 +120,7 @@ public:
 
 	void print(const char*);
 
-	size_t getNum();
+	size_t getNum() const;
 
 	// 2022.04.21 begin(), end() ÄÚµù
 	iterator begin() const {

@@ -139,7 +139,7 @@ void STRING::print(const char* s)
 	std::cout << std::endl;
 }
 
-size_t STRING::getNum()
+size_t STRING::getNum() const
 {
 	return num;
 }
