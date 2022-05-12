@@ -15,6 +15,7 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
+#include <vector>
 #include <map>
 #include <fstream>
 
@@ -27,19 +28,22 @@ extern bool 관찰;
 
 // [문제]
 // 소설에 사용된 알파벳의 빈도수를 출력하라.
+// 파일을 vector<string>에 읽어 몇 단어인지 화면에 출력하라.
 //
 
 int main()
 {
-	// 이름과 전화번호 
-	map<string, string> m;
+	ifstream in{ "Frankenstein.txt" };
+	vector<string> v{ istream_iterator<string>{in},{} };
+	map<string, int> m{};
+	
+	for (string s : v)
+		m[s]++;
+	for (auto s : m)
+		cout << s.first << " - " << s.second << endl;
 
-	m.insert(pair("홍길동", "01012345678"));
-
-	m["마우스"] = "12345678";				// 연관배열로 사용하는 것이 이해하기 편함. 집어 넣는데에 사용되기도 하고 읽을때 사용하기도 함.
-
-	for (auto [이름, 번호] : m)
-		cout << 이름 << " - " << 번호 << endl;
+	cout << v.size() << endl;
+	cout << m.size() << endl;
 
 	save("소스.cpp");
 }
