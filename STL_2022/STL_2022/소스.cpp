@@ -18,6 +18,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <algorithm>
 
 #include "save.h"
 #include "STRING.h"
@@ -27,8 +28,7 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// 소설에 사용된 알파벳의 빈도수를 출력하라.
-// 파일을 vector<string>에 읽어 몇 단어인지 화면에 출력하라.
+// 이 소설에서 각 소문자의 빈도를 세라.
 //
 
 int main()
@@ -39,11 +39,8 @@ int main()
 	
 	for (string s : v)
 		m[s]++;
-	for (auto s : m)
-		cout << s.first << " - " << s.second << endl;
 
-	cout << v.size() << endl;
-	cout << m.size() << endl;
+	cout << "가장 긴 단어 - " << *max_element(v.begin(), v.end(), [](string a, string b) {return a.length() < b.length(); }) << endl;
 
-	save("소스.cpp");
+	//save("소스.cpp");
 }
