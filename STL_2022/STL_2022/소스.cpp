@@ -36,60 +36,12 @@ int main()
 {
 	ifstream in{ "Frankenstein.txt" };
 	vector<string> v{ istream_iterator<string>{in},{} };
-	map<char, int> mc{};
+
+	// 길이가 16인 단어만 화면에 출력.
 	
-	for (string s : v)
-	{
-		for (char c : s)
-		{
-			if (islower(c))
-				mc[c]++;
-		}
-	}
-
-	/*
-	vector<pair<char, int>> sv{ mc.begin(),mc.end() };
-
-	sort(sv.begin(), sv.end(), [](const pair<char, int>& a, const pair<char, int>& b) {return a.second > b.second; });
-
-	for (auto [소문자, 갯수] : sv)
-		cout << "[" << 소문자 << "] - " << 갯수 << endl;
-	*/
-
-	/*map<char, int, greater<int>> mcig{};
-
-	for (auto [소문자, 갯수] : mc)
-		mcig[소문자] = 갯수;
-
-	for (auto [소문자, 갯수] : mcig)
-		cout << "[" << 소문자 << "] - " << 갯수 << endl;*/
-
-	map<string, int> si{};
-
-	for (const string& s : v)
-		si[s]++;
-
-	multimap<int, string, greater<int>> sis{};
-	for (auto [단어, 갯수] : si)
-		sis.emplace(make_pair(갯수, 단어));
-
-	//// 앞에서부터 20개만
-
-	//auto p = sis.begin();
-	//for (int i = 0; i < 20; ++i, ++p)
-	//	cout << p->second << " - " << p->first << endl;
-
-	// 뒤에서부터 20개만
-
-	auto p = sis.rbegin();
-	for (int i = 0; i < 20; ++i, ++p)
-		cout << p->second << " - " << p->first << endl;
-
-	// 단어 갯수가 75041개인지 검증한다.
-	int cnt{};
-	for (auto [갯수, 단어] : sis)
-		cnt += 갯수;
-	cout << cnt << endl;
+	copy_if(v.begin(), v.end(), ostream_iterator<string>{cout, "\n"}, [](const string& s) {
+		return s.length() == 16;
+		});
 
 	//save("소스.cpp");
 }
