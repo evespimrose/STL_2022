@@ -19,6 +19,8 @@
 #include <map>
 #include <fstream>
 #include <algorithm>
+#include <random>
+#include <array>
 
 #include "save.h"
 #include "STRING.h"
@@ -28,20 +30,27 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// 이 소설에서 각 소문자의 빈도를 세라.
-// 가장 많이 사용된 단어 순으로 출력하라.
+// 유니폼분포가 진짜 유니폼한가?
+// 결과를 출력해서 알아본다.
 //
+
+array<int, 10000000> a;
+default_random_engine dre;
+uniform_int_distribution uid{ 1, 10000000 };
 
 int main()
 {
-	ifstream in{ "Frankenstein.txt" };
-	vector<string> v{ istream_iterator<string>{in},{} };
+	for (int& n : a)
+		n = uid(dre);
 
-	// 길이가 16인 단어만 화면에 출력.
+	// 이때 a의 값을 10 구간으로 나누어 갯수를 센 후 출력하라.
+	map<int, int> iim;
 	
-	copy_if(v.begin(), v.end(), ostream_iterator<string>{cout, "\n"}, [](const string& s) {
-		return s.length() == 16;
-		});
+	for (int& n : a)
+		iim[n / 1000000]++;
 
+	for (auto [구간, 갯수] : iim)
+		cout << 구간 << " - " << 갯수 << endl;
+		
 	//save("소스.cpp");
 }
