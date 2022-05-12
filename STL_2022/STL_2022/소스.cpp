@@ -35,12 +35,33 @@ int main()
 {
 	ifstream in{ "Frankenstein.txt" };
 	vector<string> v{ istream_iterator<string>{in},{} };
-	map<string, int> m{};
+	map<char, int> mc{};
 	
 	for (string s : v)
-		m[s]++;
+	{
+		for (char c : s)
+		{
+			if (islower(c))
+				mc[c]++;
+		}
+	}
 
-	cout << "가장 긴 단어 - " << *max_element(v.begin(), v.end(), [](string a, string b) {return a.length() < b.length(); }) << endl;
+	/*
+	vector<pair<char, int>> sv{ mc.begin(),mc.end() };
+
+	sort(sv.begin(), sv.end(), [](const pair<char, int>& a, const pair<char, int>& b) {return a.second > b.second; });
+
+	for (auto [소문자, 갯수] : sv)
+		cout << "[" << 소문자 << "] - " << 갯수 << endl;
+	*/
+
+	map<char, int, greater<int>> mcig{};
+
+	for (auto [소문자, 갯수] : mc)
+		mcig[소문자] = 갯수;
+
+	for (auto [소문자, 갯수] : mcig)
+		cout << "[" << 소문자 << "] - " << 갯수 << endl;
 
 	//save("소스.cpp");
 }
