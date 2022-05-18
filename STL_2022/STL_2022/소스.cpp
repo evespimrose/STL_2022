@@ -13,12 +13,16 @@
 //  - 내가 만든 STRING을 원소로 순서없는 set의 원소가 되려면?
 // 
 // 컨테이너의 찾기 실력 검증 - vector / set / unordered_set
+// int 
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
+#include <array>
+#include <vector>
+#include <set>
 #include <unordered_set>
-#include <unordered_map>
-#include <string>
+#include <algorithm>
+#include <random>
 
 #include "save.h"
 #include "STRING.h"
@@ -27,48 +31,112 @@ using namespace std;
 
 extern bool 관찰;
 
-// 클래스 특수화, class specialization. 클래스 일반화는 class generalization
-template<>
-class hash<STRING>
-{
-public:
-	size_t operator()(const STRING& str) const 
-	{
-		auto val = hash<string>()({ str.begin(),str.end() });
-		cout << "해셔의 출력 - " << val << ", 메모리의 위치 - " << val % 8 << endl;
-		return val;
-	}
-};
-
 // [문제]
-// 유니폼분포가 진짜 유니폼한가?
-// 결과를 출력해서 알아본다.
+// 정수 1000만개 저장할 메모리
 //
+array<int, 1000'0000> numbers;
+
+// 컨테이너에 있나 찾아볼 int 값들
+array<int, 10'000> toFind;
+
+default_random_engine dre;
+uniform_int_distribution uid{ 1,1'0000'0000 };
 
 int main()
 {
 	//save("소스.cpp");
 
-	unordered_set<STRING> us{ "Standard", "Template", "Library" };
+	// 천만개 랜덤생성
+	for (int& n : numbers)
+		n = uid(dre);
+	// 천개 랜덤생성
+	for (int& n : toFind)
+		n = uid(dre);
 
-	while (true)
 	{
-		// 메모리 내용 출력
-		for (int i{}; i < us.bucket_count(); ++i)
+		auto time = clock();
+
+		int cnt{};
+		// 벡터의 찾기실력을 알아본다.
+		vector<int> v{ numbers.begin(),numbers.end() };
+
+		cout << "벡터의 원소 개수 - " << v.size() << endl;
+		cout << "걸린 시간 - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+
+		time = clock();
+
+		for (int n : toFind)
 		{
-			cout << "[" << i << "] ";
-			for (auto p = us.begin(i); p != us.end(i); ++p)
-				cout << "-> " << *p;
-			cout << endl;
+			auto p = find(v.begin(), v.end(), n);
+			if (p != v.end())
+				cnt++;
 		}
-		cout << endl;
+		cout << "찾아야 할 int 개수 - " << toFind.size() << endl;
+		cout << "벡터에서 찾은 개수 - " << cnt << endl << endl;
+		cout << "걸린 시간 (O(n)) - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+	}
+	{
+		auto time = clock();
+		int cnt{};
+		// 셋의 찾기실력을 알아본다.
+		set<int> s{ numbers.begin(),numbers.end() };
 
-		// 새로운 원소 추가
-		cout << "추가할 STRING은? : ";
-		STRING str;
-		cin >> str;
-		us.insert(str);
+		cout << "셋의 원소 개수 - " << s.size() << endl;
+		cout << "걸린 시간 - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
 
+		time = clock();
+
+		for (int n : toFind)
+		{
+			if (s.contains(n))
+				cnt++;
+		}
+		cout << "찾아야 할 int 개수 - " << toFind.size() << endl;
+		cout << "셋에서 찾은 개수 - " << cnt << endl << endl;
+		cout << "걸린 시간 (O(log n)) - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+	}
+	{
+		auto time = clock();
+		int cnt{};
+		// 언오더드셋의 찾기실력을 알아본다.
+		unordered_set<int> us{ numbers.begin(),numbers.end() };
+
+		cout << "언오더드셋의 원소 개수 - " << us.size() << endl;
+		cout << "걸린 시간 - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+
+		time = clock();
+
+		for (int n : toFind)
+		{
+			if (us.contains(n))
+				cnt++;
+		}
+		cout << "찾아야 할 int 개수 - " << toFind.size() << endl;
+		cout << "언오더드셋에서 찾은 개수 - " << cnt << endl << endl;
+		cout << "걸린 시간 (O(1)) - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+	}
+
+	{
+		auto time = clock();
+
+		int cnt{};
+		// 정렬된 벡터의 찾기실력을 알아본다.
+		vector<int> v{ numbers.begin(),numbers.end() };
+		sort(v.begin(), v.end());
+
+		cout << "정렬된 벡터의 원소 개수 - " << v.size() << endl;
+		cout << "걸린 시간 - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
+
+		time = clock();
+
+		for (int n : toFind)
+		{
+			if (binary_search(v.begin(), v.end(), n))
+				cnt++;
+		}
+		cout << "찾아야 할 int 개수 - " << toFind.size() << endl;
+		cout << "정렬된 벡터에서 찾은 개수 - " << cnt << endl << endl;
+		cout << "걸린 시간 (O(log n)) - " << (double)(clock() - time) / CLOCKS_PER_SEC << "초" << endl << endl;
 	}
 
 }
