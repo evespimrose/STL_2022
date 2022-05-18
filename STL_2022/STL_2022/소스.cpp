@@ -1,29 +1,26 @@
 //----------------------------------------------------------------------------------------
-// 2022. 1학기 STL 5월 12일 목요일
-// 수78목23 (11주 1일)
+// 2022. 1학기 STL 5월 18일 수요일
+// 수78목23 (11주 2일)
 // 
 // 5월 25일 졸작 설명회(수 56교시)
 // 5/30 ~ 6/20 지도교수 신청일
 // 
 // Sequential Cntainer - array, vector, deque, fowardlist, list
 // Associative Container - set, multi_set, map, multi_map
-//	map<key, value, key_compare>
-//		- 연관배열(associative array)로 사용할 수 있다.
-// PHP?
 // 
-// unordered Associative Container - u_set, u_multiset, u_map, u_multimap
+// Unordered Associative Container - u_set, u_multiset, u_map, u_multimap
+//  - 어떻게 메모리가 구성되어 있나? - 그림으로 알아본다.
+//  - 내가 만든 STRING을 원소로 순서없는 set의 원소가 되려면?
+// 
+// 컨테이너의 찾기 실력 검증 - vector / set / unordered_set
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <vector>
-#include <map>
-#include <fstream>
-#include <algorithm>
-#include <random>
-#include <array>
 
 #include "save.h"
 #include "STRING.h"
+#include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -34,23 +31,30 @@ extern bool 관찰;
 // 결과를 출력해서 알아본다.
 //
 
-array<int, 10000000> a;
-default_random_engine dre;
-uniform_int_distribution uid{ 1, 10000000 };
-
 int main()
-{
-	for (int& n : a)
-		n = uid(dre);
-
-	// 이때 a의 값을 10 구간으로 나누어 갯수를 센 후 출력하라.
-	map<int, int> iim;
-	
-	for (int& n : a)
-		iim[n / 1000000]++;
-
-	for (auto [구간, 갯수] : iim)
-		cout << 구간 << " - " << 갯수 << endl;
-		
+{		
 	//save("소스.cpp");
+
+	unordered_set<int> us{ 1,2,3,4 };
+
+	while (true)
+	{
+		// 메모리 내용 출력
+		for (int i{}; i < us.bucket_count(); ++i)
+		{
+			cout << "[" << i << "] ";
+			for (auto p = us.begin(i); p != us.end(i); ++p)
+				cout << "-> " << *p;
+			cout << endl;
+		}
+		cout << endl;
+
+		// 새로운 원소 추가
+		cout << "추가할 int는? : ";
+		int num;
+		cin >> num;
+		us.insert(num);
+
+	}
+
 }
