@@ -138,10 +138,16 @@ public:
 	reverse_iterator rend() const {
 		return reverse_iterator{ p };
 	}
+	bool operator==(const STRING& rhs) const
+	{
+		return std::string(begin(), end()) == std::string(rhs.begin(), rhs.end());
+	}
 
 private:
 	friend std::ostream& operator<<(std::ostream&, const STRING&);
 	// 2022. 4. 28 추가
 	friend std::istream& operator>>(std::istream&, STRING&);
+	// 2022. 5. 18 unordered_set이 요구하는 ==
+
 };
 

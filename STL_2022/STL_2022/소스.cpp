@@ -16,15 +16,29 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
 
 #include "save.h"
 #include "STRING.h"
-#include <unordered_set>
-#include <unordered_map>
 
 using namespace std;
 
 extern bool 관찰;
+
+// 클래스 특수화, class specialization. 클래스 일반화는 class generalization
+template<>
+class hash<STRING>
+{
+public:
+	size_t operator()(const STRING& str) const 
+	{
+		auto val = hash<string>()({ str.begin(),str.end() });
+		cout << "해셔의 출력 - " << val << ", 메모리의 위치 - " << val % 8 << endl;
+		return val;
+	}
+};
 
 // [문제]
 // 유니폼분포가 진짜 유니폼한가?
@@ -32,10 +46,10 @@ extern bool 관찰;
 //
 
 int main()
-{		
+{
 	//save("소스.cpp");
 
-	unordered_set<int> us{ 1,2,3,4 };
+	unordered_set<STRING> us{ "Standard", "Template", "Library" };
 
 	while (true)
 	{
@@ -50,10 +64,10 @@ int main()
 		cout << endl;
 
 		// 새로운 원소 추가
-		cout << "추가할 int는? : ";
-		int num;
-		cin >> num;
-		us.insert(num);
+		cout << "추가할 STRING은? : ";
+		STRING str;
+		cin >> str;
+		us.insert(str);
 
 	}
 
