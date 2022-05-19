@@ -32,15 +32,15 @@ int main()
 {
 	//save("¼Ò½º.cpp");
 
-	string str{ "South Korea and Japan just don't get along." };
+	string str{ "[South Korea and Japan just don't get along. ]" };
 
 	for (int i = 0; i < 12; ++i)
 		cout << endl;
 
 	while (true)
 	{
-		rotate(str.begin(), str.begin() + 1, str.end());
-		cout << format("{:^80}",str) << "\r";
+		rotate(str.begin() + 1, str.begin() + 2, str.end() - 1);
+		cout << format("{:^70}",str) << "\r";
 		this_thread::sleep_for(100ms);
 	}
 
