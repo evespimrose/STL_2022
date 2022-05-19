@@ -14,6 +14,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <thread>
+#include <format>
 
 #include "save.h"
 #include "STRING.h"
@@ -23,21 +25,23 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// 앞이 T인 원소가 몇 개인가?
+// 전광판처럼 흘러가게 찍어보자.
 //
 
 int main()
 {
-	string s1{ "abcdefghij" };
-	string s2{ "abcdfghijklll" };
-
-	auto [첫인자, 끝인자] = mismatch(s1.begin(), s1.end(), s2.begin(), s2.end());
-
-	string s3{ 첫인자, s1.end()};
-
-	string s4{ 끝인자, s2.end() };
-
-	cout << "결과 - " << s3 << ", " << s4 << endl;
-
 	//save("소스.cpp");
+
+	string str{ "South Korea and Japan just don't get along." };
+
+	for (int i = 0; i < 12; ++i)
+		cout << endl;
+
+	while (true)
+	{
+		rotate(str.begin(), str.begin() + 1, str.end());
+		cout << format("{:^80}",str) << "\r";
+		this_thread::sleep_for(100ms);
+	}
+
 }
