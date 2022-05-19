@@ -22,32 +22,21 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// v에 STRING이 있는데 첫글자가 다 대문자인가?
+// 앞이 T인 원소가 몇 개인가?
 //
 
-template<class InputIt, class Undefined>
-bool allof(InputIt begin, InputIt end, Undefined un)
+bool X(const STRING& str)
 {
-	//return find_if_not(begin, end, un) == end;
-	while (begin != end)
-	{
-		if (!un(*begin))
-			retrun false;
-		begin++;
-	}
-	return true;
+	if (*str.begin() == 'T')
+		return true;
+	return false;
 }
 
 int main()
 {
 	vector<STRING> v{ "Standard", "Template", "Library" };
 
-	bool res = all_of(v.cbegin(), v.cend(), [](const STRING& str) {return isupper(*str.begin()); });
-
-	if (res)
-		cout << "첫 글자 다 대문자" << endl;
-	else
-		cout << "소문자로 시작하는 단어도 있다" << endl;
+	cout << count_if(v.begin(), v.end(), X) << endl;
 
 	//save("소스.cpp");
 }
