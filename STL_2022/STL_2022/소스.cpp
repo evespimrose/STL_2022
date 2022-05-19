@@ -13,6 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #include "save.h"
 #include "STRING.h"
@@ -25,18 +26,18 @@ extern bool 관찰;
 // 앞이 T인 원소가 몇 개인가?
 //
 
-bool X(const STRING& str)
-{
-	if (*str.begin() == 'T')
-		return true;
-	return false;
-}
-
 int main()
 {
-	vector<STRING> v{ "Standard", "Template", "Library" };
+	string s1{ "abcdefghij" };
+	string s2{ "abcdfghijklll" };
 
-	cout << count_if(v.begin(), v.end(), X) << endl;
+	auto [첫인자, 끝인자] = mismatch(s1.begin(), s1.end(), s2.begin(), s2.end());
+
+	string s3{ 첫인자, s1.end()};
+
+	string s4{ 끝인자, s2.end() };
+
+	cout << "결과 - " << s3 << ", " << s4 << endl;
 
 	//save("소스.cpp");
 }
