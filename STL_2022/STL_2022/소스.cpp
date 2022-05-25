@@ -23,15 +23,17 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// copy는 왜 mutating 알고리즘인가?
+// 벡터에서 짝수를 지워라.
 //
 
 int main()
 {
-	vector v{ 1,2,3,4,5 };
-	// 목적지가 자기 자신이 될 수 있기 때문에 mutating 알고리즘이다.
+	vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-	copy(v.begin(), v.end(), inserter(v, v.begin() + 1));
+	// erase-remove idiom : 둘이 세트로 자주 쓰인다는 뜻.
+	// erase-remove idiom이 원칙이지만 c++20 부터는 지원되는 전역 erase 함수를 이용해도 해결 가능
+	//v.erase(remove_if(v.begin(), v.end(), [](int i) {return i % 2 == 0; }), v.end());
+	erase_if(v, [](int i) {return i % 2 == 0; });
 
 	for (int i : v)
 		cout << i << " ";
