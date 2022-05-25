@@ -14,6 +14,8 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <numeric>
+#include <random>
 
 #include "save.h"
 #include "STRING.h"
@@ -22,22 +24,28 @@ using namespace std;
 
 extern bool 관찰;
 
+random_device rd;
+default_random_engine dre{ rd() };
+
 // [문제]
-// 벡터에서 짝수를 지워라.
+// 랜덤한 수 n개를 화면에 출력
 //
 
 int main()
 {
-	vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	//vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-	// erase-remove idiom : 둘이 세트로 자주 쓰인다는 뜻.
-	// erase-remove idiom이 원칙이지만 c++20 부터는 지원되는 전역 erase 함수를 이용해도 해결 가능
-	//v.erase(remove_if(v.begin(), v.end(), [](int i) {return i % 2 == 0; }), v.end());
-	erase_if(v, [](int i) {return i % 2 == 0; });
+	// sample : 로또 번호뽑는 알고리즘
 
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	vector<int> v(45);		// int{}를 45번 호출
+
+	iota(v.begin(), v.end(), 1);
+
+	//for (int i : v)
+	//	cout << i << " ";
+	//cout << endl;
+
+	sample(v.begin(), v.end(), ostream_iterator<int>{cout, " "}, 6, dre);
 
 	//save("소스.cpp");
 }
