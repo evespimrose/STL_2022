@@ -14,6 +14,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <fstream>
 
 #include "save.h"
 #include "STRING.h"
@@ -23,18 +24,22 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// 
+// 프랑켄슈타인.txt는 모두 몇 개의 unique한 word로 이루어졌나?
 //
 
 int main()
 {
-	vector<int> v{ 1, 2, 3, 3, 3, 5, 3 };
+	ifstream in{ "Frankenstein.txt" };
+
+	vector<string> v{ istream_iterator<string>{in},{} };
+
+	cout << "중복 단어 제거 전 - " << v.size() << endl;
+
+	sort(v.begin(), v.end());
 
 	v.erase(unique(v.begin(), v.end()),v.end());
 
-	for (int i : v)
-		cout << i << " ";
-	cout << endl;
+	cout << "중복 단어 제거 후 - " << v.size() << endl;
 
 	//save("소스.cpp");
 }
