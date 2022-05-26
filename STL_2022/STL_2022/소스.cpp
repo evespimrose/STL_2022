@@ -15,11 +15,8 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <numeric>
-#include <random>
-#include <format>
+#include <vector>
 
 #include "save.h"
 #include "STRING.h"
@@ -28,44 +25,18 @@ using namespace std;
 
 extern bool 관찰;
 
-random_device rd;
-default_random_engine dre{ rd() };
-uniform_int_distribution uid{ 1,9 };
-
 template<class Iter>
-void print(Iter b, Iter e)
+//vector<int>::difference_type dist(vector<int>::iterator b, vector<int>::iterator e)
+long long dist(Iter b, Iter e)
 {
-    while (b != e)
-    {
-        cout << format("{:4d}", *b);
-        ++b;
-    }
-    cout << endl;
+    return e - b;
 }
-
-class Dog
-{
-public:
-    int num1;
-    int num2;
-
-    Dog()
-    {
-        num1 = uid(dre);
-        num2 = uid(dre);
-    }
-};
 
 int main()
 {
-    vector<Dog> dogs(20);
+    vector<int> v{ 1,2,3,4,5 };
 
-    sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {return a.num1 < b.num1; });
-    
-    sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {return a.num2 < b.num2; });
+    cout << "반복자 간의 거리 - " << dist(v.begin(), v.end()) << endl;
 
-    for (Dog& dog : dogs)
-        cout << dog.num1 << " - " << dog.num2 << endl;
-
-    //save("소스.cpp");
+    save("소스.cpp");
 }
