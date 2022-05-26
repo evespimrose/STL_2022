@@ -25,18 +25,29 @@ using namespace std;
 
 extern bool 관찰;
 
-template<class Iter>
+template<class Iter>            // generic한 코드.
 //vector<int>::difference_type dist(vector<int>::iterator b, vector<int>::iterator e)
 long long dist(Iter b, Iter e)
 {
+    // 이 코드는 반복자에서만 실행되었으면 좋겠다.
     return e - b;
 }
+
+template<>
+long long dist<int>(int b, int e)
+{
+    cout << "int일 때 - ";
+    return e - b;
+}
+
+
 
 int main()
 {
     vector<int> v{ 1,2,3,4,5 };
 
     cout << "반복자 간의 거리 - " << dist(v.begin(), v.end()) << endl;
+    cout << dist(1, 100) << endl;
 
     save("소스.cpp");
 }
