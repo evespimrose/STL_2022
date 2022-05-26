@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
-#include <deque>
+#include <list>
 #include <concepts>
 
 #include "save.h"
@@ -28,23 +28,33 @@ using namespace std;
 
 extern bool 관찰;
 
-template<contiguous_iterator T>
-void f(T b, T e)
+template<input_iterator Iter>                     // concept 문법
+long long dist(Iter b, Iter e)
 {
-    cout << "contiguous 반복자가 맞다" << endl;
+    if constexpr (is_same_v<random_access_iterator_tag, typename iterator_traits<Iter>::iterator_category>)
+        return e - b;
+    // 걸음수를 센다.
+    long long step{};
+    while (b != e)
+    {
+        ++step;
+        ++b;
+    }
+    return step;
+
 }
 
 // [문제]
-// contiguous iterator일때만 작동되는 함수 f를 만들고 싶다.
+// 표준 distance와 같은 dist를 구현하라.
 //
 
 int main()
 {
     vector<int> v;
-    f(v.begin(), v.end());
+    cout << dist(v.begin(), v.end()) << endl;
 
-    deque<int> d;
-    //f(d.begin(), d.end());          // d는 랜덤이지 contiguous가 아니다.
+    list<int> ist{ 1,2,3 };
+    cout << dist(ist.begin(), ist.end()) << endl;
 
     save("소스.cpp");
 }
