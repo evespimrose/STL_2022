@@ -18,8 +18,8 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
-#include <compare>
-#include <list>
+#include <deque>
+#include <concepts>
 
 #include "save.h"
 #include "STRING.h"
@@ -28,35 +28,23 @@ using namespace std;
 
 extern bool 관찰;
 
-template<class T>
-long long dist(T b, T e)
+template<contiguous_iterator T>
+void f(T b, T e)
 {
-    // 만일 T가 랜덤반복자라면
-    //         e-b가 거리이다.
-    // 그렇지 않다면
-    //         b부터 몇 번 이동했는지 세야한다.
-    // 
-    if (is_base_of_v< input_iterator_tag, typename iterator_traits<T>::iterator_category>)
-    {
-        if constexpr (is_same_v<random_access_iterator_tag, typename iterator_traits<T>::iterator_category>)       // type_traits_ 랜덤반복자 태그
-   //if (is_same_v<typename iterator_traits<T>::iterator_category, input_iterator_tag>)       // type_traits_ 입력반복자 태그
-   //if (is_base_of_v< input_iterator_tag, typename iterator_traits<T>::iterator_category>)       // type_traits_ 입력반복자 태그
-            return e - b;
-        // 랜덤반복자가 아닌 경우에더 e-b 문장이 생성되어 컴파일 오류 발생
-        // - 이전 해결 방법 : tag dispatching
-        // c++17부터는 constexpr if로 선택적 컴파일 가능
-        else
-            return 100;
-    }
+    cout << "contiguous 반복자가 맞다" << endl;
 }
+
+// [문제]
+// contiguous iterator일때만 작동되는 함수 f를 만들고 싶다.
+//
 
 int main()
 {
-    vector<int> v{ 1,2,3,4,5 };
-    list<int> ist{ 1,2,3 };
+    vector<int> v;
+    f(v.begin(), v.end());
 
-    dist(v.begin(), v.end());
-    dist(ist.begin(), ist.end());
+    deque<int> d;
+    //f(d.begin(), d.end());          // d는 랜덤이지 contiguous가 아니다.
 
-    //save("소스.cpp");
+    save("소스.cpp");
 }
