@@ -30,6 +30,7 @@ extern bool 관찰;
 
 random_device rd;
 default_random_engine dre{ rd() };
+uniform_int_distribution uid{ 1,9 };
 
 template<class Iter>
 void print(Iter b, Iter e)
@@ -42,70 +43,29 @@ void print(Iter b, Iter e)
     cout << endl;
 }
 
+class Dog
+{
+public:
+    int num1;
+    int num2;
+
+    Dog()
+    {
+        num1 = uid(dre);
+        num2 = uid(dre);
+    }
+};
+
 int main()
 {
-    vector<int> v(100);
+    vector<Dog> dogs(20);
 
-    iota(v.begin(), v.end(), 1);
+    sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {return a.num1 < b.num1; });
+    
+    sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {return a.num2 < b.num2; });
 
-    cout << "vector<int>의 값" << endl;
-    print(v.begin(), v.end());
-    cout << endl;
-
-    {
-        // 기준에 따라 분리
-        shuffle(v.begin(), v.end(), dre);
-        cout << "partition 이전" << endl;
-        print(v.begin(), v.end());
-
-        // 홀수와 짝수로 분리한 후 출력
-        auto p = partition(v.begin(), v.end(), [](int n) {return n % 2; });
-        cout << "partition 이후" << endl;
-        cout << "홀수" << endl;
-        print(v.begin(), p);
-        cout << "짝수" << endl;
-        print(p, v.end());
-    }
-    {
-        // 선착순 20등까지만 통과 -   1등부터 20등까지 순서는 중요하지 않다.
-        //cout << "nth_element 이전" << endl;
-        //print(v.begin(), v.end());
-
-        // 20등까지만 통과
-        cout << "nth_element 이후" << endl;
-        nth_element(v.begin(), v.begin() + 20, v.end());
-
-        cout << "20등 이내" << endl;
-        print(v.begin(), v.begin() + 20);
-        cout << "나머지" << endl;
-        print(v.begin() + 20, v.end());
-    }
-
-    {
-        // 선착순 50등까지만 정렬 후 출력, 나머지는 그냥 출력
-        shuffle(v.begin(), v.end(), dre);
-        //cout << "partial_sort 이전" << endl;
-        //print(v.begin(), v.end());
-
-        partial_sort(v.begin(), v.begin() + 50, v.end(), [](int a, int b) {return a < b; });
-        cout << "partial_sort 이후" << endl;
-        cout << "50등 이내" << endl;
-        print(v.begin(), v.begin() + 50);
-        cout << "나머지" << endl;
-        print(v.begin() + 50, v.end());
-    }
-
-    {
-        // 전체 정렬
-        shuffle(v.begin(), v.end(), dre);
-        cout << "sort 이전" << endl;
-        print(v.begin(), v.end());
-
-        sort(v.begin(), v.end());
-        cout << "sort 이후" << endl;
-        print(v.begin(), v.end());
-
-    }
+    for (Dog& dog : dogs)
+        cout << dog.num1 << " - " << dog.num2 << endl;
 
     //save("소스.cpp");
 }
