@@ -14,12 +14,10 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <deque>
-#include <forward_list>
+#include <algorithm>
 #include <list>
-#include <concepts>
+#include <ranges>
 
 #include "save.h"
 #include "STRING.h"
@@ -29,39 +27,25 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// 함수 f는 반복자만 인자로 받아들인다.
-// 인자로 전달된 반복자의 category를 출력한다.
+// v를 내림차순 정렬하고 출력하라.
 //
 
-template<input_iterator Iter>
-void f(Iter iter)
-{
-    if (contiguous_iterator<Iter>)
-        cout << "contiguous 반복자입니다." << endl;
-    else if (random_access_iterator<Iter>)
-        cout << "random_access 반복자입니다." << endl;
-    else if (bidirectional_iterator<Iter>)
-        cout << "bidirectional 반복자입니다." << endl;
-    else if (forward_iterator<Iter>)
-        cout << "forward 반복자입니다." << endl;
-    else
-        cout << "반복자이긴 하다" << endl;
-    cout << "==================================" << endl << endl;
-}
-
-// 템플릿에 클래스라 쓰면 아무거나 전달되도 상관업음
-// 반복자만 인자로 받기 위해
-// 문법적으로 구조적으로 구분할 방법이 생김
-// 제약조건이 틀리면 돌아가지 않음
+// ranges는 알고리즘과 iterator를 확장시키고 일반화시킨 것
+// ranges 라이브러리는 range view라고 하는 경량 오브젝트를 만들고 조작한다.
+// 
+// 
+//
 
 int main()
 {
-    //f(1);           // 제약조건 충족 안됨
-    f(vector<char>::iterator{});
-    f(deque<int>::iterator{});
-    f(list<float>::const_iterator{});
-    f(forward_list<double>::iterator{});
+    vector<int> v{ 1,2,3,4,5,6,7,8,9,10 };
 
+    //ranges::sort(v);
+    ranges::sort(v, greater<int>{});
 
-    save("소스.cpp");
+    for (int i : v)
+        cout << i << " ";
+    cout << endl;
+
+    //save("소스.cpp");
 }
