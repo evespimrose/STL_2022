@@ -14,11 +14,8 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <string>
 #include <ranges>
-#include <random>
 
 #include "save.h"
 #include "STRING.h"
@@ -28,50 +25,26 @@ using namespace std;
 extern bool 관찰;
 
 // [문제]
-// v를 이름 오름차순으로 정렬하고 출력하라.
-//
-
-// ranges는 알고리즘과 iterator를 확장시키고 일반화시킨 것
-// ranges 라이브러리는 range view라고 하는 경량 오브젝트를 만들고 조작한다.
-// 
 // 
 //
-
-default_random_engine dre;
-uniform_int_distribution<> uidNum{ 1,1000 };
-uniform_int_distribution<> uidName{ 'a', 'z' };
-
-class Dog
-{
-    string name;
-    int num;
-    
-public:
-    Dog()
-    {
-        for (int i = 0; i < 10; ++i)
-            name += uidName(dre);
-        num = uidNum(dre);
-    }
-
-    string getName() const { return name; }
-
-    int getNum() const { return num; }
-
-    void show() const { cout << name << " - " << num << endl; }
-};
 
 int main()
 {
-    vector<Dog> v(100);
+    int a[]{ 1,2,3,4,5,6,7,8,9,10 };
 
-    //ranges::sort(v, {}, &Dog::getName);
-    ranges::sort(v, less<int>(), &Dog::getNum);
-    //ranges::sort(v, less<string>(), &Dog::getName);           // name 기준 오름차순
-    //ranges::sort(v, greater<string>(), &Dog::getName);        // name 기준 내림차순
+    auto v = views::all(a);
 
-    for (const Dog& dog : v)
-        dog.show();
+    cout << "a의 크기 " << sizeof(a) << endl;
+
+    cout << "a의 모든 원소로 구성된 view의 크기" << sizeof(v) << endl;
+
+    cout << "v의 타입 : " << typeid(v).name() << endl;
+
+    *v.begin() = 200;
+
+    for (int n : a)
+        cout << n << " ";
+    cout << endl;
 
     //save("소스.cpp");
 }
