@@ -22,7 +22,7 @@
 #include "save.h"
 #include "STRING.h"
 
-// [문제] "단어들.txt"에 있는 단어를 읽고 갯수를 출력하라.
+// [문제] "단어들.txt"에 있는 단어를 읽고 가장 긴 단어를 화면이 출력하라.
 //
 
 using namespace std;
@@ -43,25 +43,11 @@ int main()
     }*/
 
     
-    vector<string> vs{ istream_iterator<string>{in},{} };
-    cout << vs.size() << endl;
+    vector<string> v{ istream_iterator<string>{in},{} };
+
+    auto p = max_element(v.begin(), v.end(), [](string l, string r) {return l.size() < r.size(); });
     
-
-    // 정렬되어 있는지 확인해보자.
-
-    cout << "정렬? " << boolalpha << is_sorted(vs.begin(), vs.end(), less<string>{}) << endl;
-
-    // 중복된 단어가 있나 체크해보자
-    /* {
-        auto it = unique(vs.begin(), vs.end());
-        if (it == vs.end())
-            cout << "중복되지 않음" << endl;
-    }*/
-
-    set<string> s{ vs.begin(),vs.end() };
-
-    if (s.size() == vs.size())
-        cout << "중복 없음" << endl;
+    cout << *p << " - " << p->size() << endl;
 
     //save("소스.cpp");
 }
