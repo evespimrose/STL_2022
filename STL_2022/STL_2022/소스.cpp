@@ -14,39 +14,54 @@
 // 
 //----------------------------------------------------------------------------------------
 #include <iostream>
-#include <ranges>
-#include <format>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <set>
 
 #include "save.h"
 #include "STRING.h"
 
-// constrained algorithm : concept으로 coding
-// span<T> : [], string, array, vector
-// [문제] 소수(prime number)를 출력하라.
+// [문제] "단어들.txt"에 있는 단어를 읽고 갯수를 출력하라.
 //
 
 using namespace std;
 
 extern bool 관찰;
 
-bool isPrime(int n)
-{
-    for (int i = 2; i <= n / 2; ++i)
-        if (n % i == 0)
-            return false;
-    return true;
-}
-
 int main()
 {
-    // [문제] 소수(prime number)를 100개만 출력하라.
-    for (int n : views::iota(2) | views::filter(isPrime)|views::take(100)
+    ifstream in{ "단어들.txt" };
 
-        )
-    {
-        cout << format("{:8}", n);
-    }
+    /* {
+        long long cnt{};
+        string s{};
 
+        while (in >> s)
+            ++cnt;
+        cout << cnt;
+    }*/
+
+    
+    vector<string> vs{ istream_iterator<string>{in},{} };
+    cout << vs.size() << endl;
+    
+
+    // 정렬되어 있는지 확인해보자.
+
+    cout << "정렬? " << boolalpha << is_sorted(vs.begin(), vs.end(), less<string>{}) << endl;
+
+    // 중복된 단어가 있나 체크해보자
+    /* {
+        auto it = unique(vs.begin(), vs.end());
+        if (it == vs.end())
+            cout << "중복되지 않음" << endl;
+    }*/
+
+    set<string> s{ vs.begin(),vs.end() };
+
+    if (s.size() == vs.size())
+        cout << "중복 없음" << endl;
 
     //save("소스.cpp");
 }
