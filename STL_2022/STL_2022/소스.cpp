@@ -44,48 +44,23 @@ struct WP : public pair<string, string>
 int main()
 {
     ifstream in{ "단어들.txt" };
+    ofstream out{ "애너그램들.txt" };
     //save("소스.cpp");
     
     vector<WP> v{ istream_iterator<string>{in},{} };
-
-    //sort(v.begin(), v.end(), [](const WP& w, const WP& p) {return w.first < p.first; });
     ranges::sort(v, {}, &WP::first);
 
-    /*for (WP wp : v | views::drop(30000) | views::take(200))
-        cout << wp.first << " - " << wp.second << endl;
-        */
+    auto b = v.begin();
+    int cnt{ 1 };
     while (true)
     {
-        string word;
-        cout << "찾을 단어는?";
-        cin >> word;
-
-        string w{ word };
-        ranges::sort(w, {});
-        WP wp{ word };
-        auto [하한, 상한] = equal_range(v.begin(), v.end(), wp, [](const WP& a, const WP& b) {return a.first < b.first; });
-
-        if (하한 == 상한)
-        {
-            cout << word << "는 없습니다" << endl;
-            continue;
-        }
-        else if( 상한 - 하한 == 1)
-        {
-            cout << word << "의 애너그램은 없습니다" << endl;
-            continue;
-        }
-        cout << word << "의 애너그램 : " << word << " ";
-        for (auto p = 하한; p != 상한; ++p)
-            cout << p->second << " ";
-        cout << endl;
-        /*if (!ranges::binary_search(v, w, {}, &WP::first))
-        {
-            cout << word << "는 없습니다" << endl;
-            continue;
-        }*/
-        // 애너그램을 찾아 출력
-        // word의 각 순열이 단어들txt에 있나 확인하면 끝
-        // 먼저 word를 정렬한다.
+        auto i = adjacent_find(b, v.end(), [](const WP& a, const WP& b) {return a.first == b.first; });
+        auto j = find_if_not(i + 1, v.end(), [&i](const WP& a) {return a.first == i->first; });
+        // [i,j)는 애너그램 구간이다.
+        out << "[" << cnt << "] - ";
+        for (auto p = i; p < j; ++p)
+            out << p->second << " ";
+        out << endl;
+        ++cnt;
     }
 }
