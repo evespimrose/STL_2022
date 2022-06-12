@@ -7899,9 +7899,9 @@ public:
 	{
 		name = i;
 	}
-	void addId(int i)
+	void addId()
 	{
-		id = id + 1;
+		id++;
 	}
 };
 
@@ -7909,9 +7909,9 @@ string file1{ "시험1.dat" };
 string file2{ "시험2.dat" };
 
 template<class Iter>
-Iter AddOne(Iter iter)
+Iter AddOne(Iter& iter)
 {
-	iter->addId(1);
+	iter->addId();
 
 	return iter;
 }
@@ -7950,6 +7950,7 @@ int main()
 	v1[10000].show();
 	v2[10000].show();
 	cout << v1.size() << " " << v2.size() << endl;
+
 	sort(v1.begin(), v1.end(), [](const Test& a, const Test& b) {return a.getName() < b.getName(); });
 	sort(v2.begin(), v2.end(), [](const Test& a, const Test& b) {return a.getName() < b.getName(); });
 
@@ -7959,6 +7960,9 @@ int main()
 	cout << v3.size() << endl;
 
 	copy(v3.begin(), v3.end(), AddOne(v3.begin()));
+
+	for (const Test& t : v3)
+		cout << t.name << ", " << t.id << endl;
 
 	/*auto b = v1.begin();
 
